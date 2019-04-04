@@ -24,6 +24,5 @@
 /.nb-gradle/
 /build/
 
-settings.xml
 /health/target/
 /.idea/
