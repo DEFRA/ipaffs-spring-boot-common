@@ -1,49 +1,50 @@
-package uk.gov.defra.tracesx.common.health;
+package uk.gov.defra.tracesx.common.health.checks;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.Status;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import uk.gov.defra.tracesx.common.health.Check;
+import uk.gov.defra.tracesx.common.health.HealthDto;
 
-import java.util.Arrays;
+import java.util.Collections;
 
-public class PermissionsHealthCheck {
+@Component
+public class PermissionsCheck implements Check {
+
+    @Value("${permissions.service.scheme}")
+    private String permissionsScheme;
+
+    @Value("${permissions.service.host}")
+    private String permissionsHost;
+
+    @Value("${permissions.service.port}")
+    private String permissionsPort;
 
     private RestTemplate healthCheckRestTemplate;
     private static final String HEALTH_CHECK = "/admin/health-check";
 
-    private String permissionsScheme;
-
-    private String permissionsHost;
-
-    private String permissionsPort;
-
-    public PermissionsHealthCheck(RestTemplate healthCheckRestTemplate, String permissionsScheme, String permissionsHost, String permissionsPort) {
+    @Autowired
+    public PermissionsCheck(RestTemplate healthCheckRestTemplate) {
         this.healthCheckRestTemplate = healthCheckRestTemplate;
-        this.permissionsScheme = permissionsScheme;
-        this.permissionsHost = permissionsHost;
-        this.permissionsPort = permissionsPort;
     }
 
-    public Health get() {
+    @Override
+    public Health check() {
+
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
 
         try {
             ResponseEntity response = healthCheckRestTemplate.exchange(getHealthCheckPath(), HttpMethod.GET, entity, HealthDto.class);
-
-            HealthDto healthDto = response.getStatusCode() == HttpStatus.OK ? (HealthDto) response.getBody() : null;
-            if (healthDto == null || Status.DOWN.equals(healthDto.getStatus())) {
-                return Health.down().build();
-            }
-
+            return response.getStatusCode() == HttpStatus.OK ? Health.down().build() : Health.up().build();
         } catch (Exception e) {
             return Health.down().build();
         }
-
-        return Health.up().build();
     }
 
     public String getHealthCheckPath() {
