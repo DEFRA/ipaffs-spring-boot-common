@@ -56,8 +56,7 @@ public class HealthCheckTest {
     @Before
     public void init() {
         dependentServiceHealthCheckUrls = Arrays.asList(PERMISSIONS_SERVICE, DEPENDENT_SERVICE_1, DEPENDENT_SERVICE_2);
-        healthCheck = new HealthCheck(jdbcTemplate, restTemplate, dependentServiceHealthCheckUrls);
-        setPermissionsServiceUrl();
+        healthCheck = new HealthCheck(jdbcTemplate, restTemplate, dependentServiceHealthCheckUrls, true);
     }
 
     @Test
@@ -115,6 +114,19 @@ public class HealthCheckTest {
         thenWeExpectTheHealthToBe(Status.DOWN);
     }
 
+    @Test
+    public void whenNoPermissionsCheckIsRequired() {
+        dependentServiceHealthCheckUrls = Arrays.asList(PERMISSIONS_SERVICE, DEPENDENT_SERVICE_1, DEPENDENT_SERVICE_2);
+        healthCheck = new HealthCheck(jdbcTemplate);
+
+        setPermissionsCheckConfig();
+        givenDatabaseIsUp();
+        givenServiceIsUp(PERMISSIONS_SERVICE);
+        whenWeCheckTheHealth();
+        thenWeExpectNoServiceCheckIsCalled(PERMISSIONS_SERVICE);
+        thenWeExpectTheHealthToBe(Status.UP);
+    }
+
     private void givenDatabaseIsUp() {
         when(jdbcTemplate.query(anyString(), any(SingleColumnRowMapper.class))).thenReturn(Arrays.asList("1"));
     }
@@ -126,31 +138,31 @@ public class HealthCheckTest {
     private void givenServiceIsUp(String service) {
         when(restTemplate.exchange(eq(service), Mockito.<HttpMethod> eq(HttpMethod.GET),
                 Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-                new ResponseEntity(Status.UP, HttpStatus.OK));
+                new ResponseEntity<>(Status.UP, HttpStatus.OK));
     }
 
     private void givenServiceIsDown(String service) {
         when(restTemplate.exchange(eq(service), Mockito.<HttpMethod> eq(HttpMethod.GET),
                 Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-                new ResponseEntity(Status.DOWN, HttpStatus.SERVICE_UNAVAILABLE));
+                new ResponseEntity<>(Status.DOWN, HttpStatus.SERVICE_UNAVAILABLE));
     }
 
     private void givenNoDatabaseAndNoDependentServices() {
-        dependentServiceHealthCheckUrls = Arrays.asList(PERMISSIONS_SERVICE);
-        healthCheck = new HealthCheck(null, restTemplate, dependentServiceHealthCheckUrls);
-        setPermissionsServiceUrl();
+        dependentServiceHealthCheckUrls = Collections.singletonList(PERMISSIONS_SERVICE);
+        healthCheck = new HealthCheck(null, restTemplate, dependentServiceHealthCheckUrls, true);
+        setPermissionsCheckConfig();
     }
 
     private void givenNoDatabase() {
         dependentServiceHealthCheckUrls = Arrays.asList(PERMISSIONS_SERVICE, DEPENDENT_SERVICE_1, DEPENDENT_SERVICE_2);
-        healthCheck = new HealthCheck(null, restTemplate, dependentServiceHealthCheckUrls);
-        setPermissionsServiceUrl();
+        healthCheck = new HealthCheck(null, restTemplate, dependentServiceHealthCheckUrls, true);
+        setPermissionsCheckConfig();
     }
 
     private void givenNoDependentService() {
-        dependentServiceHealthCheckUrls = Arrays.asList(PERMISSIONS_SERVICE);
-        healthCheck = new HealthCheck(jdbcTemplate, restTemplate, dependentServiceHealthCheckUrls);
-        setPermissionsServiceUrl();
+        dependentServiceHealthCheckUrls = Collections.singletonList(PERMISSIONS_SERVICE);
+        healthCheck = new HealthCheck(jdbcTemplate, restTemplate, dependentServiceHealthCheckUrls, true);
+        setPermissionsCheckConfig();
     }
 
     private void whenWeCheckTheHealth() {
@@ -163,14 +175,13 @@ public class HealthCheckTest {
 
     private void thenWeExpectNoServiceCheckIsCalled(String service) {
         verify(restTemplate, never()).exchange(eq(service), Mockito.<HttpMethod> eq(HttpMethod.GET),
-                Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any());
+                Mockito.any(), Mockito.<Class<Object>> any());
 
     }
 
-    private void setPermissionsServiceUrl() {
-        ReflectionTestUtils.setField(healthCheck, PERMISSIONS_SCHEME, SCHEME);
-        ReflectionTestUtils.setField(healthCheck, PERMISSIONS_HOST, HOST);
-        ReflectionTestUtils.setField(healthCheck, PERMISSIONS_PORT, PORT);
-        healthCheck.init();
+    private void setPermissionsCheckConfig() {
+      ReflectionTestUtils.setField(healthCheck, PERMISSIONS_SCHEME, SCHEME);
+      ReflectionTestUtils.setField(healthCheck, PERMISSIONS_HOST, HOST);
+      ReflectionTestUtils.setField(healthCheck, PERMISSIONS_PORT, PORT);
     }
 }
