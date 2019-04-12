@@ -1,21 +1,27 @@
 package uk.gov.defra.tracesx.common.health.checks;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.stereotype.Component;
-import uk.gov.defra.tracesx.common.health.Check;
 
 import java.util.List;
 
 @Component
-public class JdbcHealthyCheck implements Check {
+public class JdbcHealth implements CheckHealth {
 
     private JdbcTemplate jdbcTemplate;
 
-    public JdbcHealthyCheck(JdbcTemplate jdbcTemplate) {
+    @Autowired
+    public JdbcHealth(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public String getName() {
+        return "Jdbc Health Check";
     }
 
     @Override

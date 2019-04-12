@@ -134,27 +134,27 @@ public class HealthCheckTest {
 //        checkDependentServices = Arrays.asList(DEPENDENT_SERVICE);
 //        when(restTemplate.exchange(eq(DEPENDENT_SERVICE), Mockito.<HttpMethod> eq(HttpMethod.GET),
 //                Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-//                new ResponseEntity(new HealthDto(Status.UP), HttpStatus.OK));
+//                new ResponseEntity(new HttpCheckStatus(Status.UP), HttpStatus.OK));
 //    }
 //
 //    private void givenDependentServiceIsDown() {
 //        checkDependentServices = Arrays.asList(DEPENDENT_SERVICE);
 //        when(restTemplate.exchange(eq(DEPENDENT_SERVICE), Mockito.<HttpMethod> eq(HttpMethod.GET),
 //                Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-//                new ResponseEntity(new HealthDto(Status.DOWN), HttpStatus.OK));
+//                new ResponseEntity(new HttpCheckStatus(Status.DOWN), HttpStatus.OK));
 //
 //    }
 //
 //    private void givenPermissionsServicesIsUp() {
 //        when(restTemplate.exchange(eq(PERMISSION_HEALTH_CHECK_PATH), Mockito.<HttpMethod> eq(HttpMethod.GET),
 //                Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-//                new ResponseEntity(new HealthDto(Status.UP), HttpStatus.OK));
+//                new ResponseEntity(new HttpCheckStatus(Status.UP), HttpStatus.OK));
 //    }
 //
 //    private void givenPermissionsServicesIsDown() {
 //        when(restTemplate.exchange(eq(PERMISSION_HEALTH_CHECK_PATH), Mockito.<HttpMethod> eq(HttpMethod.GET),
 //                Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-//                new ResponseEntity(new HealthDto(Status.DOWN), HttpStatus.OK));
+//                new ResponseEntity(new HttpCheckStatus(Status.DOWN), HttpStatus.OK));
 //    }
 //
 //    private void givenNoDatabase() {

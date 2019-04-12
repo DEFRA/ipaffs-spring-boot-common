@@ -12,7 +12,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -68,13 +67,13 @@ public class PermissionsHealthCheckTest {
     private void givenPermissionsServicesIsUp() {
         when(restTemplate.exchange(eq(PERMISSION_HEALTH_CHECK_PATH), Mockito.<HttpMethod> eq(HttpMethod.GET),
                 Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-                new ResponseEntity(new HealthDto(Status.UP), HttpStatus.OK));
+                new ResponseEntity(new HttpCheckStatus(Status.UP), HttpStatus.OK));
     }
 
     private void givenPermissionsServicesIsDown() {
         when(restTemplate.exchange(eq(PERMISSION_HEALTH_CHECK_PATH), Mockito.<HttpMethod> eq(HttpMethod.GET),
                 Mockito.<HttpEntity<?>> any(), Mockito.<Class<Object>> any())).thenReturn(
-                new ResponseEntity(new HealthDto(Status.DOWN), HttpStatus.OK));
+                new ResponseEntity(new HttpCheckStatus(Status.DOWN), HttpStatus.OK));
     }
 
     private void whenWeCheckTheHealth() {

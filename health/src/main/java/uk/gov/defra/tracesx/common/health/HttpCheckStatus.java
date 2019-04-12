@@ -10,6 +10,6 @@ import org.springframework.boot.actuate.health.Status;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HealthDto {
+public class HttpCheckStatus {
     private Status status;
 }
