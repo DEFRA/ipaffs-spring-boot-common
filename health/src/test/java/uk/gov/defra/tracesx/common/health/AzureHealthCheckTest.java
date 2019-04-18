@@ -22,11 +22,10 @@ import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearch
 @RunWith(MockitoJUnitRunner.class)
 public class AzureHealthCheckTest {
 
-  private String serviceName = "imports-azure-search";
+  private String serviceName = "imports-azure-search-shared";
   private String indexName = "1-economic-operators-index";
   private String apiKey = "292100772E2E949870ADA7F9038B1DBA";
   private String apiVersion = "2017-11-11";
-  private String deploymentEnvironment = "shared-s2";
 
   private String url;
 
@@ -34,7 +33,7 @@ public class AzureHealthCheckTest {
 
   @Before
   public void setUp() {
-    url = buildAzureIndexSearchUrl(serviceName, deploymentEnvironment, indexName, apiVersion);
+    url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
   }
 
   @Test
@@ -45,7 +44,7 @@ public class AzureHealthCheckTest {
         .thenReturn(ResponseEntity.ok().build());
     Health health =
         new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion, deploymentEnvironment)
+                restTemplate, serviceName, indexName, apiKey, apiVersion)
             .check();
 
     assertEquals(health, Health.up().build());
@@ -54,13 +53,13 @@ public class AzureHealthCheckTest {
   @Test
   public void willReturnUnHealthyWhenAzureQueryNotOk() {
 
-    url = buildAzureIndexSearchUrl(serviceName, deploymentEnvironment, indexName, apiVersion);
+    url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
     when(restTemplate.exchange(
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
         .thenReturn(ResponseEntity.notFound().build());
     Health health =
         new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion, deploymentEnvironment)
+                restTemplate, serviceName, indexName, apiKey, apiVersion)
             .check();
 
     assertEquals(health, Health.down().build());
@@ -69,13 +68,13 @@ public class AzureHealthCheckTest {
   @Test
   public void willReturnUnHealthyWhenClientThrowsException() {
 
-    url = buildAzureIndexSearchUrl(serviceName, deploymentEnvironment, indexName, apiVersion);
+    url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
     when(restTemplate.exchange(
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
         .thenThrow(RestClientException.class);
     Health health =
         new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion, deploymentEnvironment)
+                restTemplate, serviceName, indexName, apiKey, apiVersion)
             .check();
 
     assertEquals(health, Health.down().build());

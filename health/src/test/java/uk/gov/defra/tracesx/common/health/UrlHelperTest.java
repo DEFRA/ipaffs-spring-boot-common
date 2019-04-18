@@ -24,10 +24,10 @@ public class UrlHelperTest {
   @Test
   public void willReturnHealthyWhenCalled() {
 
-    String url = buildAzureIndexSearchUrl("service", "env", "index", "version");
+    String url = buildAzureIndexSearchUrl("service", "index", "version");
 
     assertEquals(
         url,
-        "https://service-env.search.windows.net/indexes/index/docs/search?api-version=version");
+        "https://service.search.windows.net/indexes/index/docs/search?api-version=version");
   }
 }

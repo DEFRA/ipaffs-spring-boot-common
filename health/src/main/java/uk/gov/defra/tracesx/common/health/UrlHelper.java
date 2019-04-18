@@ -9,10 +9,10 @@ public class UrlHelper {
   private static final String INDEXES = "indexes";
 
   public static String buildAzureIndexSearchUrl(
-      String serviceName, String deploymentEnvironment, String indexName, String apiVersion) {
+      String serviceName, String indexName, String apiVersion) {
     String root =
         String.format(
-            "%s://%s-%s.%s", SCHEME, serviceName, deploymentEnvironment, SEARCH_WINDOWS_NET);
+            "%s://%s.%s", SCHEME, serviceName, SEARCH_WINDOWS_NET);
     String path = String.format("%s/%s/%s", INDEXES, indexName, DOCS_SEARCH);
     String param = String.format("%s=%s", API_VERSION, apiVersion);
     return String.format("%s/%s?%s", root, path, param);
