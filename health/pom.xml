@@ -4,7 +4,7 @@
 
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>health</name>
     <properties>
         <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
@@ -23,7 +23,7 @@
 
     <scm>
         <connection>${parent.scm.connection}</connection>
-        <tag>1.0.2-5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
