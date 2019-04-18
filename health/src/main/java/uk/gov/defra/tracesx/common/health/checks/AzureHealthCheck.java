@@ -23,12 +23,11 @@ public class AzureHealthCheck extends HttpHealthCheck {
       @Value("${azure.search-service-name:service}") String serviceName,
       @Value("${azure.index-name:index}") String indexName,
       @Value("${azure.query-api-key:api-key}") String apiKey,
-      @Value("${azure.api-version:api-version}") String apiVersion,
-      @Value("${azure.deployment-environment:env}") String deploymentEnvironment) {
+      @Value("${azure.api-version:api-version}") String apiVersion) {
     super(
         restTemplate,
         new HttpHealthParams(
-            buildAzureIndexSearchUrl(serviceName, deploymentEnvironment, indexName, apiVersion),
+            buildAzureIndexSearchUrl(serviceName, indexName, apiVersion),
             "Azure Health Check",
             buildEntity(apiKey),
             HttpMethod.POST));
