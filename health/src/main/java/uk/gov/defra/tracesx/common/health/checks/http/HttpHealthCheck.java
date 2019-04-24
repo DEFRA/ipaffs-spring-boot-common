@@ -31,8 +31,12 @@ public abstract class HttpHealthCheck implements CheckHealth {
 
     try {
       ResponseEntity response =
-          restTemplate.exchange(httpHealthParams.getUrl(), httpHealthParams.getMethod(), httpHealthParams.getEntity(), String.class);
-      if(response.getStatusCode() == HttpStatus.OK){
+          restTemplate.exchange(
+              httpHealthParams.getUrl(),
+              httpHealthParams.getMethod(),
+              httpHealthParams.getEntity(),
+              String.class);
+      if (response.getStatusCode() == HttpStatus.OK) {
         return Health.up().build();
       } else {
         LOGGER.error("{} failed status code check {}", getName());

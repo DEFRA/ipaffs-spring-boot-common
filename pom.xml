@@ -3,7 +3,7 @@
   <artifactId>TracesX-SpringBoot-Common</artifactId>
   <version>1.0.3-SNAPSHOT</version>
   <name>common-parent</name>
-  <description>Shared Spring Boot: Parent</description>
+  <description>Shared Spring Boot: Common Libraries Aggregator Module</description>
   <packaging>pom</packaging>
   <groupId>uk.gov.defra.tracesx</groupId>
 

@@ -6,6 +6,11 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Configuration
 public class HealthCheckConfiguration {
@@ -22,16 +27,16 @@ public class HealthCheckConfiguration {
   }
 
   @Bean
-  @Qualifier("healthCheck")
-  public RestTemplate defaultRestTemplate(RestTemplateBuilder restTemplateBuilder) {
-    return restTemplateBuilder
+  @Qualifier("defaultHealthCheckRestTemplate")
+  public RestTemplate defaultHealthCheckRestTemplate() {
+    return new RestTemplateBuilder()
         .setConnectTimeout(connectTimeout)
         .setReadTimeout(readTimeout)
         .build();
   }
 
   @Bean
-  public RestTemplateBuilder restTemplateBuilder() {
-    return new RestTemplateBuilder();
+  public HealthChecker healthChecker(Optional<List<CheckHealth>> checks) {
+    return new HealthChecker(checks.orElse(Collections.emptyList()));
   }
 }

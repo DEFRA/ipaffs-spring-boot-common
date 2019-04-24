@@ -1,5 +1,7 @@
 package uk.gov.defra.tracesx.common.health.http;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -8,8 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthParams;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpHealthParamsTest {

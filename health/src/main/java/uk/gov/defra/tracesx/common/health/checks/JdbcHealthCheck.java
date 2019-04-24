@@ -3,14 +3,17 @@ package uk.gov.defra.tracesx.common.health.checks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javax.sql.DataSource;
 
 @Component
+@ConditionalOnClass({DataSource.class, JdbcTemplate.class})
 public class JdbcHealthCheck implements CheckHealth {
 
   private JdbcTemplate jdbcTemplate;

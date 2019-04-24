@@ -1,5 +1,10 @@
 package uk.gov.defra.tracesx.common.health;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,17 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AzureHealthCheckTest {
@@ -43,9 +42,7 @@ public class AzureHealthCheckTest {
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
         .thenReturn(ResponseEntity.ok().build());
     Health health =
-        new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion)
-            .check();
+        new AzureHealthCheck(restTemplate, serviceName, indexName, apiKey, apiVersion).check();
 
     assertEquals(health, Health.up().build());
   }
@@ -58,9 +55,7 @@ public class AzureHealthCheckTest {
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
         .thenReturn(ResponseEntity.notFound().build());
     Health health =
-        new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion)
-            .check();
+        new AzureHealthCheck(restTemplate, serviceName, indexName, apiKey, apiVersion).check();
 
     assertEquals(health, Health.down().build());
   }
@@ -73,9 +68,7 @@ public class AzureHealthCheckTest {
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
         .thenThrow(RestClientException.class);
     Health health =
-        new AzureHealthCheck(
-                restTemplate, serviceName, indexName, apiKey, apiVersion)
-            .check();
+        new AzureHealthCheck(restTemplate, serviceName, indexName, apiKey, apiVersion).check();
 
     assertEquals(health, Health.down().build());
   }
