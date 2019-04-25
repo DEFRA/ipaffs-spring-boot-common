@@ -8,14 +8,12 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.test.context.FilteredClassLoader;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
@@ -24,7 +22,6 @@ import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import javax.sql.DataSource;
 
 public class HealthCheckConfigurationSpringTest {
 
@@ -63,9 +60,7 @@ public class HealthCheckConfigurationSpringTest {
   }
 
   private final ApplicationContextRunner contextRunner =
-      new ApplicationContextRunner()
-          .withUserConfiguration(ComponentScanConfiguration.class)
-          .withClassLoader(new FilteredClassLoader(JdbcTemplate.class, DataSource.class));
+      new ApplicationContextRunner().withUserConfiguration(ComponentScanConfiguration.class);
 
   @Test
   public void testEmptyHealthCheckerCreated() {
@@ -73,6 +68,7 @@ public class HealthCheckConfigurationSpringTest {
         (context) -> {
           assertThat(context).hasSingleBean(HealthChecker.class);
           assertThat(context.getBean(ComponentScanConfiguration.class).checks).isEmpty();
+          assertThat(context.getBean(HealthChecker.class).health()).isEqualTo(Health.up().build());
         });
   }
 
@@ -118,8 +114,8 @@ public class HealthCheckConfigurationSpringTest {
   @Test
   public void testJdbcHealthCheckCreated() {
     this.contextRunner
+        .withPropertyValues("spring.datasource.url", "foo:url")
         .withUserConfiguration(ComponentScanConfiguration.class, JdbcTemplateConfiguration.class)
-        .withClassLoader(ClassUtils.getDefaultClassLoader())
         .run(
             (context) -> {
               assertThat(context).hasSingleBean(JdbcTemplate.class);
