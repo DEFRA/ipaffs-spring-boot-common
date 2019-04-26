@@ -42,8 +42,8 @@ public abstract class HttpHealthCheck implements CheckHealth {
         LOGGER.error("{} failed status code check", getName());
         return Health.down().build();
       }
-    } catch (RestClientException e) {
-      LOGGER.error("{} failed with message {}", getName(), e.getMessage());
+    } catch (RestClientException exception) {
+      LOGGER.error("{} failed with message {}", getName(), exception.getMessage());
       return Health.down().build();
     }
   }

@@ -40,8 +40,8 @@ public class JdbcHealthCheck implements CheckHealth {
       } else {
         health = Health.up().build();
       }
-    } catch (DataAccessException e) {
-      LOGGER.error("{} failed with message {}", getName(), e.getMessage());
+    } catch (DataAccessException exception) {
+      LOGGER.error("{} failed with message {}", getName(), exception.getMessage());
       health = Health.down().build();
     }
     return health;
