@@ -45,14 +45,7 @@ public class HealthCheckConfigurationSpringTest {
   public static class CustomHealthCheckerConfiguration {
 
     @Bean
-    public CheckHealth checkHealth1() {
-      CheckHealth checkHealth = mock(CheckHealth.class);
-      when(checkHealth.check()).thenReturn(Health.up().build());
-      return checkHealth;
-    }
-
-    @Bean
-    public CheckHealth checkHealth2() {
+    public CheckHealth customHealthCheck() {
       CheckHealth checkHealth = mock(CheckHealth.class);
       when(checkHealth.check()).thenReturn(Health.up().build());
       return checkHealth;
@@ -135,13 +128,13 @@ public class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  public void testCustomHealthCheckBeansRegisteredAndInvoked() {
+  public void testCustomHealthCheckBeanRegisteredAndInvoked() {
     this.contextRunner
         .withUserConfiguration(
             ComponentScanConfiguration.class, CustomHealthCheckerConfiguration.class)
         .run(
             (context) -> {
-              assertThat(context).getBeans(CheckHealth.class).hasSize(2);
+              assertThat(context).getBeans(CheckHealth.class).hasSize(1);
               Collection<CheckHealth> customHealths =
                   context.getBeansOfType(CheckHealth.class).values();
               assertThat(context.getBean(HealthChecker.class).health())

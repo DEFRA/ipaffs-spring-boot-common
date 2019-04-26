@@ -39,7 +39,7 @@ public abstract class HttpHealthCheck implements CheckHealth {
       if (response.getStatusCode() == HttpStatus.OK) {
         return Health.up().build();
       } else {
-        LOGGER.error("{} failed status code check {}", getName());
+        LOGGER.error("{} failed status code check", getName());
         return Health.down().build();
       }
     } catch (RestClientException e) {
