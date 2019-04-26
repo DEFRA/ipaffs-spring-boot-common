@@ -2,7 +2,7 @@
 
 ## Common Health library
 
-This module should be included as a dependency for Spring projects in order to implement their health check.
+This module should be included as a dependency for TracesX Spring boot microservice projects in order to implement their health check.
 
 To integrate this library you should ensure you have access to the defra artifacts store so a valid settings.xml file will be required.
 
@@ -18,29 +18,25 @@ Include the following library in your pom.xml
 </dependency> 
 ```
 
-By default the library will bootstrap an Azure health check and Jdbc health check, you will need to supply your own custom bean to bootstrap if you require anything else specific, this can be done by implementing the CheckHealth interface.
+The library detects any CheckHealth beans available in the application context and adds these to the health check. It also instantiates an Azure health check and JDBC health check according to the following conditions:
+- If application property ```azure.index-name``` is configured then an Azure health check is instantiated.
+- If application property ```spring.datasource.url``` is configured then a Jdbc health check is instantiated.
+- If neither of the above properties are present a basic health check is provided so you need provide no extra configuration in your service.
+
+If you have another means of determining health in your service then implement the CheckHealth interface and make a bean available in your configuration, it will be wired in automatically.
 
 ## How to configure
 
-Example from permissions service:
+If the service already does  component scan on ```uk.gov.defra.tracesx``` (as per using the common security or common spring boot parent) then no configuration is required.
+If your service is not doing that component scan simply add @ComponentScan to your applications configuration class like
 
 ```
-@Bean
-  public HealthChecker healthChecks(
-          JdbcHealthCheck jdbcHealthCheck) {
-    return new HealthChecker(Collections.singletonList(jdbcHealthCheck));
-  }
-```
-
-You will also need to add @ComponentScan to your config class like
-
-```
-@ComponentScan("uk.gov.defra.tracesx.common.*")
+@ComponentScan("uk.gov.defra.tracesx.common.health")
 ```
 
 ### Config
 
-The library configures its own RestTemplate, the timeouts can be configured separately via the following config
+The library configures its own RestTemplate bean named ```defaultHealthCheckRestTemplate```, the timeouts can be configured separately via the following config
 
 *management.health.custom.http.connectTimeout*   defaults to 1 second
 
