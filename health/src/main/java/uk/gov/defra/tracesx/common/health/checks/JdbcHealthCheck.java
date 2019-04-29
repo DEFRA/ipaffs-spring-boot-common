@@ -3,6 +3,7 @@ package uk.gov.defra.tracesx.common.health.checks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@ConditionalOnProperty(name = "spring.datasource.url")
 public class JdbcHealthCheck implements CheckHealth {
 
   private JdbcTemplate jdbcTemplate;
@@ -38,8 +40,8 @@ public class JdbcHealthCheck implements CheckHealth {
       } else {
         health = Health.up().build();
       }
-    } catch (DataAccessException e) {
-      LOGGER.error("{} failed with message {}", getName(), e.getMessage());
+    } catch (DataAccessException exception) {
+      LOGGER.error("{} failed with message {}", getName(), exception.getMessage());
       health = Health.down().build();
     }
     return health;

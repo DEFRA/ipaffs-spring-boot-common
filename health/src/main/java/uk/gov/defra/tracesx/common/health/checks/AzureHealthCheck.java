@@ -1,7 +1,10 @@
 package uk.gov.defra.tracesx.common.health.checks;
 
+import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,17 +16,16 @@ import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthParams;
 
 import java.util.Collections;
 
-import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
-
 @Component
+@ConditionalOnProperty(name = "azure.index-name")
 public class AzureHealthCheck extends HttpHealthCheck {
 
   public AzureHealthCheck(
-      @Qualifier("healthCheck") RestTemplate restTemplate,
-      @Value("${azure.search-service-name:service}") String serviceName,
-      @Value("${azure.index-name:index}") String indexName,
-      @Value("${azure.query-api-key:api-key}") String apiKey,
-      @Value("${azure.api-version:api-version}") String apiVersion) {
+      @Qualifier("defaultHealthCheckRestTemplate") RestTemplate restTemplate,
+      @Value("${azure.search-service-name}") String serviceName,
+      @Value("${azure.index-name}") String indexName,
+      @Value("${azure.query-api-key}") String apiKey,
+      @Value("${azure.api-version}") String apiVersion) {
     super(
         restTemplate,
         new HttpHealthParams(

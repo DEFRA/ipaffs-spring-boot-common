@@ -31,15 +31,19 @@ public abstract class HttpHealthCheck implements CheckHealth {
 
     try {
       ResponseEntity response =
-          restTemplate.exchange(httpHealthParams.getUrl(), httpHealthParams.getMethod(), httpHealthParams.getEntity(), String.class);
-      if(response.getStatusCode() == HttpStatus.OK){
+          restTemplate.exchange(
+              httpHealthParams.getUrl(),
+              httpHealthParams.getMethod(),
+              httpHealthParams.getEntity(),
+              String.class);
+      if (response.getStatusCode() == HttpStatus.OK) {
         return Health.up().build();
       } else {
-        LOGGER.error("{} failed status code check {}", getName());
+        LOGGER.error("{} failed status code check", getName());
         return Health.down().build();
       }
-    } catch (RestClientException e) {
-      LOGGER.error("{} failed with message {}", getName(), e.getMessage());
+    } catch (RestClientException exception) {
+      LOGGER.error("{} failed with message {}", getName(), exception.getMessage());
       return Health.down().build();
     }
   }
