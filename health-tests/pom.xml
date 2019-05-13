@@ -14,6 +14,7 @@
     <maven.compiler.target.version>1.8</maven.compiler.target.version>
     <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
     <restassured.version>3.3.0</restassured.version>
+    <maven.checkstyle.version>3.0.0</maven.checkstyle.version>
   </properties>
 
   <dependencyManagement>
@@ -56,4 +57,43 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven.checkstyle.version}</version>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+            <logViolationsToConsole>true</logViolationsToConsole>
+            <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+            <violationSeverity>warning</violationSeverity>
+            <failsOnError>true</failsOnError>
+            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>${maven.compiler.source.version}</source>
+          <target>${maven.compiler.target.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
