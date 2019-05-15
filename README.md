@@ -1,4 +1,4 @@
-# Spring Boot Common Security
+# Spring Boot Common
 
 ## Common Health library
 
