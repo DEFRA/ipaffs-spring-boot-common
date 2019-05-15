@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>uk.gov.defra.tracesx</groupId>
+  <artifactId>TracesX-SpringBoot-Common-Azure</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>azure</name>
+
+  <properties>
+    <maven.compiler.source.version>1.8</maven.compiler.source.version>
+    <maven.compiler.target.version>1.8</maven.compiler.target.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
+    <maven.checkstyle.version>3.0.0</maven.checkstyle.version>
+  </properties>
+
+  <distributionManagement>
+    <repository>
+      <id>release</id>
+      <name>Releases</name>
+      <url>${repo.releases.url}</url>
+    </repository>
+  </distributionManagement>
+
+  <scm>
+    <connection>${parent.scm.connection}</connection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-queries</artifactId>
+      <version>7.5.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <!-- TEST Dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven.checkstyle.version}</version>
+          <configuration>
+            <configLocation>google_checks.xml</configLocation>
+            <logViolationsToConsole>true</logViolationsToConsole>
+            <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+            <violationSeverity>warning</violationSeverity>
+            <failsOnError>true</failsOnError>
+            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>${maven.compiler.source.version}</source>
+          <target>${maven.compiler.target.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
