@@ -9,6 +9,11 @@ import org.junit.Test;
 public class SearchQueryBuilderTest {
 
   private static final String FIELD_NAME = "test-field";
+  private static final String FIELD_NAME_AS_STRING = "test-field:";
+  private static final String VALUE_NO_SPECIAL_CHARS = "abcdefg";
+  private static final String VALUE_SPECIAL_CHARS = "abcde+-&&||!(){}[]^\"~*?:\\/fg";
+  private static final String ESCAPED_VALUE_SPECIAL_CHARS =
+      "abcde\\\\+\\\\-\\\\&&\\\\||\\\\!\\\\(\\\\)\\\\{\\\\}\\\\[\\\\]\\\\^\\\\\"\\\\~\\\\*\\\\?\\\\:\\\\\\/fg";
 
   private SearchQueryBuilder searchQueryBuilder;
 
@@ -19,21 +24,29 @@ public class SearchQueryBuilderTest {
 
   @Test
   public void createWildcardSearchQueryWithNoSpecialCharactersReturnsCorrectQuery() {
-    String value = "abcdefg";
+    Query query = searchQueryBuilder.createWildcardSearchQuery(FIELD_NAME, VALUE_NO_SPECIAL_CHARS);
 
-    Query query = searchQueryBuilder.createWildcardSearchQuery(FIELD_NAME, value);
-
-    assertEquals("test-field:abcdefg*", query.toString());
+    assertEquals(FIELD_NAME_AS_STRING + VALUE_NO_SPECIAL_CHARS + "*", query.toString());
   }
 
   @Test
   public void createWildcardSearchQueryWithSpecialCharactersReturnsCorrectQuery() {
-    String value = "abcde+-&&||!(){}[]^\"~*?:\\/fg";
+    Query query = searchQueryBuilder.createWildcardSearchQuery(FIELD_NAME, VALUE_SPECIAL_CHARS);
 
-    Query query = searchQueryBuilder.createWildcardSearchQuery(FIELD_NAME, value);
+    assertEquals(FIELD_NAME_AS_STRING + ESCAPED_VALUE_SPECIAL_CHARS, query.toString());
+  }
 
-    assertEquals(
-        "test-field:abcde\\\\+\\\\-\\\\&&\\\\||\\\\!\\\\(\\\\)\\\\{\\\\}\\\\[\\\\]\\\\^\\\\\"\\\\~\\\\*\\\\?\\\\:\\\\\\/fg",
-        query.toString());
+  @Test
+  public void createWildcardSearchValueWithNoSpecialCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createWildcardSearchValue(VALUE_NO_SPECIAL_CHARS);
+
+    assertEquals(VALUE_NO_SPECIAL_CHARS + "*", value);
+  }
+
+  @Test
+  public void createWildcardSearchValueWithSpecialCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createWildcardSearchValue(VALUE_SPECIAL_CHARS);
+
+    assertEquals(ESCAPED_VALUE_SPECIAL_CHARS, value);
   }
 }

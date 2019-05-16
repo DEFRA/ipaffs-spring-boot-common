@@ -7,7 +7,6 @@ import org.apache.lucene.search.TermQuery;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SearchQueryBuilder {
 
@@ -17,31 +16,24 @@ public class SearchQueryBuilder {
   private static final String ESCAPE_PREFIX = "\\";
 
   public Query createWildcardSearchQuery(String field, String value) {
-    String escapedValue = escapeMetaCharacters(value);
-    String updatedValue = hasAzureSpecialCharacters(escapedValue)
-        ? escapedValue
-        : String.format("%s*", escapedValue);
-    return createSearchQuery(field, updatedValue);
-  }
-
-  private Boolean hasAzureSpecialCharacters(String value) {
-    return !AZURE_SEARCH_SPECIAL_CHARACTERS.stream()
-        .filter(value::contains)
-        .collect(Collectors.toList())
-        .isEmpty();
+    return createSearchQuery(field, escapeSpecialCharacters(value));
   }
 
   private Query createSearchQuery(String field, String value) {
     return new TermQuery(new Term(field, value));
   }
 
-  private String escapeMetaCharacters(String inputString) {
-    String escapedString = inputString;
+  private String escapeSpecialCharacters(String inputValue) {
+    String escapedValue = inputValue;
     for (String specialCharacter : AZURE_SEARCH_SPECIAL_CHARACTERS) {
-      escapedString = StringUtils.replace(escapedString,
+      escapedValue = StringUtils.replace(escapedValue,
           specialCharacter,
           ESCAPE_PREFIX.concat(specialCharacter));
     }
-    return escapedString;
+    return !escapedValue.equals(inputValue) ? escapedValue : String.format("%s*", inputValue);
+  }
+
+  public String createWildcardSearchValue(String value) {
+    return escapeSpecialCharacters(value);
   }
 }
