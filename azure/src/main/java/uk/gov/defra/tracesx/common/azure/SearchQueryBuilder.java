@@ -16,7 +16,14 @@ public class SearchQueryBuilder {
   private static final String ESCAPE_PREFIX = "\\";
 
   public Query createWildcardSearchQuery(String field, String value) {
-    return createSearchQuery(field, escapeSpecialCharacters(value));
+    Query searchQuery;
+    String escapedValue = escapeSpecialCharacters(value);
+    if (!escapedValue.equals(value)) {
+      searchQuery = createSearchQuery(field, escapedValue);
+    } else {
+      searchQuery = createSearchQuery(field, String.format("%s*", value));
+    }
+    return searchQuery;
   }
 
   private Query createSearchQuery(String field, String value) {
@@ -30,10 +37,10 @@ public class SearchQueryBuilder {
           specialCharacter,
           ESCAPE_PREFIX.concat(specialCharacter));
     }
-    return !escapedValue.equals(inputValue) ? escapedValue : String.format("%s*", inputValue);
+    return escapedValue;
   }
 
-  public String createWildcardSearchValue(String value) {
+  public String createSearchValue(String value) {
     return escapeSpecialCharacters(value);
   }
 }
