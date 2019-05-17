@@ -13,7 +13,7 @@ public class SearchQueryBuilderTest {
   private static final String VALUE_NO_SPECIAL_CHARS = "abcdefg";
   private static final String VALUE_SPECIAL_CHARS = "abcde+-&&||!(){}[]^\"~*?:\\/fg";
   private static final String ESCAPED_VALUE_SPECIAL_CHARS =
-      "abcde\\\\+\\\\-\\\\&&\\\\||\\\\!\\\\(\\\\)\\\\{\\\\}\\\\[\\\\]\\\\^\\\\\"\\\\~\\\\*\\\\?\\\\:\\\\\\/fg";
+      "abcde\\+\\-\\&&\\||\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\?\\:\\\\\\/fg";
 
   private SearchQueryBuilder searchQueryBuilder;
 
@@ -37,15 +37,15 @@ public class SearchQueryBuilderTest {
   }
 
   @Test
-  public void createWildcardSearchValueWithNoSpecialCharactersReturnsCorrectValue() {
-    String value = searchQueryBuilder.createWildcardSearchValue(VALUE_NO_SPECIAL_CHARS);
+  public void createSearchValueWithNoSpecialCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createSearchValue(VALUE_NO_SPECIAL_CHARS);
 
-    assertEquals(VALUE_NO_SPECIAL_CHARS + "*", value);
+    assertEquals(VALUE_NO_SPECIAL_CHARS, value);
   }
 
   @Test
-  public void createWildcardSearchValueWithSpecialCharactersReturnsCorrectValue() {
-    String value = searchQueryBuilder.createWildcardSearchValue(VALUE_SPECIAL_CHARS);
+  public void createSearchValueWithSpecialCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createSearchValue(VALUE_SPECIAL_CHARS);
 
     assertEquals(ESCAPED_VALUE_SPECIAL_CHARS, value);
   }
