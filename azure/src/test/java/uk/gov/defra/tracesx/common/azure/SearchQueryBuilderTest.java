@@ -13,7 +13,7 @@ public class SearchQueryBuilderTest {
   private static final String VALUE_NO_SPECIAL_CHARS = "abcdefg";
   private static final String VALUE_SPECIAL_CHARS = "abcde+-&&||!(){}[]^\"~*?:\\/fg";
   private static final String ESCAPED_VALUE_SPECIAL_CHARS =
-      "abcde\\\\+\\\\-\\\\&&\\\\||\\\\!\\\\(\\\\)\\\\{\\\\}\\\\[\\\\]\\\\^\\\\\"\\\\~\\\\*\\\\?\\\\:\\\\\\/fg";
+      "abcde\\+\\-\\&&\\||\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\?\\:\\\\\\/fg";
 
   private SearchQueryBuilder searchQueryBuilder;
 
