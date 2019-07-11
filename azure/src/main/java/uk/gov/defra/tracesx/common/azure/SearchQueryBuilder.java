@@ -11,8 +11,8 @@ import java.util.List;
 public class SearchQueryBuilder {
 
   private static final List<String> AZURE_SEARCH_SPECIAL_CHARACTERS = Arrays
-      .asList("\\", "+", "-", "&&", "||", "!", "(", ")", "{", "}", "[", "]", "^", "\"", "~", "*",
-          "?", ":", "/");
+      .asList("\\", "\"", "+", "-", "&", "|", "!", "(", ")", "{", "}", "[", "]", "^", "~", "*",
+          "?", ":", "/", "`", "<", ">", "#", "%", ";", "@", "=");
   private static final String ESCAPE_PREFIX = "\\";
 
   public Query createWildcardSearchQuery(String field, String value) {

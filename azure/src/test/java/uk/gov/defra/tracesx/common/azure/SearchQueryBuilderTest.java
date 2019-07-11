@@ -10,10 +10,15 @@ public class SearchQueryBuilderTest {
 
   private static final String FIELD_NAME = "test-field";
   private static final String FIELD_NAME_AS_STRING = "test-field:";
-  private static final String VALUE_NO_SPECIAL_CHARS = "abcdefg";
-  private static final String VALUE_SPECIAL_CHARS = "abcde+-&&||!(){}[]^\"~*?:\\/fg";
+  private static final String VALUE_NO_SPECIAL_CHARS = "abcdefg àáâ ' , . £ $";
+  private static final String VALUE_SPECIAL_CHARS = "abc + - && || ! ( ) { } [ ] ^ ~ * ? : / ` < > # % ; @ = abc123";
   private static final String ESCAPED_VALUE_SPECIAL_CHARS =
-      "abcde\\+\\-\\&&\\||\\!\\(\\)\\{\\}\\[\\]\\^\\\"\\~\\*\\?\\:\\\\\\/fg";
+      "abc \\+ \\- \\&\\& \\|\\| \\! \\( \\) \\{ \\} \\[ \\] \\^ \\~ \\* \\? \\: \\/ \\` \\< \\> \\# \\% \\; \\@ \\= abc123";
+  private static final String DOUBLE_VALUE_SPECIAL_CHARS = "++ -- &&&& |||| !! (( )) {{ }} [[ ]] ^^ ~~ ** ?? :: // `` << >> ## %% ;; @@ ==";
+  private static final String ESCAPED_DOUBLE_VALUE_SPECIAL_CHARS =
+      "\\+\\+ \\-\\- \\&\\&\\&\\& \\|\\|\\|\\| \\!\\! \\(\\( \\)\\) \\{\\{ \\}\\} \\[\\[ \\]\\] \\^\\^ \\~\\~ \\*\\* \\?\\? \\:\\: \\/\\/ \\`\\` \\<\\< \\>\\> \\#\\# \\%\\% \\;\\; \\@\\@ \\=\\=";
+  private static final String QUOTE_BACKSLASH_VALUE = "\\ \"";
+  private static final String ESCAPED_QUOTE_BACKSLASH_VALUE = "\\\\ \\\"";
 
   private SearchQueryBuilder searchQueryBuilder;
 
@@ -48,5 +53,19 @@ public class SearchQueryBuilderTest {
     String value = searchQueryBuilder.createSearchValue(VALUE_SPECIAL_CHARS);
 
     assertEquals(ESCAPED_VALUE_SPECIAL_CHARS, value);
+  }
+
+  @Test
+  public void createSearchValueWithDoubleSpecialCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createSearchValue(DOUBLE_VALUE_SPECIAL_CHARS);
+
+    assertEquals(ESCAPED_DOUBLE_VALUE_SPECIAL_CHARS, value);
+  }
+
+  @Test
+  public void createSearchValueWithQuoteAndBackslashCharactersReturnsCorrectValue() {
+    String value = searchQueryBuilder.createSearchValue(QUOTE_BACKSLASH_VALUE);
+
+    assertEquals(ESCAPED_QUOTE_BACKSLASH_VALUE, value);
   }
 }
