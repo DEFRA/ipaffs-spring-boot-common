@@ -1,12 +1,49 @@
 # Spring Boot Common
 
+## Common Event library
+
+This module should be included as a dependency for TracesX Spring Boot microservice projects, whereby protective monitoring events are called.
+
+To integrate this library you will be required to ensure the correct configuration is applied in the relevant application.yml file.
+
+### Steps to integrate
+
+Include the following library in your pom.xml
+
+```
+<dependency>
+    <groupId>uk.gov.defra.tracesx</groupId>
+    <artifactId>TracesX-SpringBoot-Common-Event</artifactId>
+    <version>desired version</version>
+</dependency>
+```
+
+The library detects which ProtectiveMonitor to declare via conditional properties in the configuration file.
+- If no configuration is provided, then the ProtectiveMonitor will default to LogBasedProtectiveMonitor - Output is LOGGER.info()
+- If application property ```monitoring.type``` is set to ```log``` then it will use LogBasedProtectiveMonitor - Output is LOGGER.info()
+- If application property ```monitoring.type``` is set to ```app-insights``` then it will use AppInsightsBasedMonitor - Output is AppInsights Event
+- If application property ```monitoring.type``` is set to ```event-hub``` then it will use EventHubBasedMonitor - Output is the Azure Event Hub
+
+Specify the following config in services, default will null out the event hub and use the log as standard.
+
+```
+monitoring:
+  type: ${MONITORING_TYPE:log}
+  event-hub:
+    namespace: ${EVENT_HUB_NAMESPACE:null}
+    name: ${EVENT_HUB_NAME:null}
+    key:
+      name: ${EVENT_HUB_KEY_NAME:null}
+      value: ${EVENT_HUB_KEY_VALUE:null}
+```
+
 ## Common Health library
 
 This module should be included as a dependency for TracesX Spring boot microservice projects in order to implement their health check.
 
 To integrate this library you should ensure you have access to the defra artifacts store so a valid settings.xml file will be required.
 
-# Steps to integrate
+### Steps to integrate
 
 Include the following library in your pom.xml
 
@@ -15,7 +52,7 @@ Include the following library in your pom.xml
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
     <version>desired version</version>
-</dependency> 
+</dependency>
 ```
 
 The library detects any CheckHealth beans available in the application context and adds these to the health check. It also instantiates an Azure health check and JDBC health check according to the following conditions:
@@ -25,7 +62,7 @@ The library detects any CheckHealth beans available in the application context a
 
 If you have another means of determining health in your service then implement the CheckHealth interface and make a bean available in your configuration, it will be wired in automatically.
 
-## How to configure
+### How to configure
 
 If the service already does  component scan on ```uk.gov.defra.tracesx``` (as per using the common security or common spring boot parent) then no configuration is required.
 If your service is not doing that component scan simply add @ComponentScan to your applications configuration class like
@@ -41,7 +78,7 @@ The library configures its own RestTemplate bean named ```defaultHealthCheckRest
 *management.health.custom.http.connectTimeout*   defaults to 1 second
 
 *management.health.custom.http.readTimeout*   defaults to 1 second
- 
+
 ### Turn off Springs defaults
 
 Spring configures its own health checks, the following code is required in your service to disable the default behaviour and rely solely on your config
