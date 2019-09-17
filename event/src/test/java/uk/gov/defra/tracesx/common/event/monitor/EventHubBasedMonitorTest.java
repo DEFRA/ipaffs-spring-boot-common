@@ -36,7 +36,7 @@ public class EventHubBasedMonitorTest {
   private EventHubBasedMonitor eventHubBasedMonitor;
 
   @Test
-  public void sendMessage_CallsEventHubClient() throws JsonProcessingException, EventHubException {
+  public void sendMessage_CallsEventHubClientAndAppInsights() throws JsonProcessingException, EventHubException {
     Message message = Message.getDefaultMessageBuilder().build();
     byte[] bytes = new ObjectMapper().writeValueAsBytes(message);
     when(messageUtil.writeMessageToBytes(message)).thenReturn(bytes);
@@ -45,6 +45,7 @@ public class EventHubBasedMonitorTest {
 
     verify(messageUtil, times(1)).writeMessageToBytes(message);
     verify(eventHubClient, times(1)).sendSync(any(EventData.class));
+    verify(appInsightsBasedMonitor, times(1)).sendMessage(message);
   }
 
   @Test
