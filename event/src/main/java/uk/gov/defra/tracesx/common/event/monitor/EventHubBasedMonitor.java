@@ -28,6 +28,7 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
     EventData sendEvent = EventData.create(payloadBytes);
     try {
       eventHubClient.sendSync(sendEvent);
+      appInsightsBasedMonitor.sendMessage(message);
     } catch (EventHubException | NullPointerException exception) {
       message.setPriority(Priority.CRITICAL);
       appInsightsBasedMonitor.sendMessage(message);
