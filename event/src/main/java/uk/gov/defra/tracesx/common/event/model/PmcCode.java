@@ -3,11 +3,9 @@ package uk.gov.defra.tracesx.common.event.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PmcCode {
-  PMC_02("0200"),
-  PMC_07("0700"),
-  PMC_12("1200"),
-  PMC_13("1300"),
-  PMC_14("1400");
+  PMC_0701("0701"),
+  PMC_0706("0706"),
+  PMC_1400("1400");
 
   private String value;
 
