@@ -6,11 +6,24 @@
   <version>1.0.11-SNAPSHOT</version>
   <name>azure</name>
 
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-dependencies</artifactId>
+    <version>2.0.9.RELEASE</version>
+  </parent>
+
   <properties>
-    <maven.compiler.source.version>1.8</maven.compiler.source.version>
-    <maven.compiler.target.version>1.8</maven.compiler.target.version>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.boot.version>2.0.5.RELEASE</spring.boot.version>
+
+    <!-- Spring Boot dependency version overrides -->
+    <commons.lang3.version>3.8.1</commons.lang3.version>
+    <jackson.version>2.9.10</jackson.version>
+    <!-- End Spring Boot dependency version overrides -->
+
+    <lucene-queries.version>7.5.0</lucene-queries.version>
     <maven.checkstyle.version>3.0.0</maven.checkstyle.version>
   </properties>
 
@@ -27,29 +40,15 @@
     <tag>HEAD</tag>
   </scm>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring.boot.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-queries</artifactId>
-      <version>7.5.0</version>
+      <version>${lucene-queries.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.7</version>
-      <scope>compile</scope>
     </dependency>
     <!-- TEST Dependencies -->
     <dependency>
@@ -89,11 +88,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <source>${maven.compiler.source.version}</source>
-          <target>${maven.compiler.target.version}</target>
-        </configuration>
       </plugin>
     </plugins>
   </build>
