@@ -40,7 +40,7 @@ public class MessageUtilTest {
             .transactionCode(TransactionCode.IPAFFS_404)
             .message("message")
             .build())
-        .pmcCode(PmcCode.PMC_02)
+        .pmcCode(PmcCode.PMC_1400)
         .build();
   }
 
