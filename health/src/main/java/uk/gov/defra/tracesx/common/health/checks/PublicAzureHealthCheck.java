@@ -13,13 +13,13 @@ import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthParams;
 import uk.gov.defra.tracesx.common.health.checks.util.AzureHealthCheckUtil;
 
 @Component
-@ConditionalOnProperty(name = "azure.index-name")
-public class AzureHealthCheck extends HttpHealthCheck {
+@ConditionalOnProperty({"azure.public-index-name", "spring.datasource.multiple-enabled"})
+public class PublicAzureHealthCheck extends HttpHealthCheck {
 
-  public AzureHealthCheck(
+  public PublicAzureHealthCheck(
       @Qualifier("defaultHealthCheckRestTemplate") RestTemplate restTemplate,
       @Value("${azure.search-service-name}") String serviceName,
-      @Value("${azure.index-name}") String indexName,
+      @Value("${azure.public-index-name}") String indexName,
       @Value("${azure.query-api-key}") String apiKey,
       @Value("${azure.api-version}") String apiVersion) {
     super(

@@ -7,22 +7,22 @@ import org.springframework.stereotype.Component;
 import uk.gov.defra.tracesx.common.health.checks.util.JdbcHealthCheckUtil;
 
 @Component
-@ConditionalOnProperty(name = "spring.datasource.url")
-public class JdbcHealthCheck implements CheckHealth {
+@ConditionalOnProperty({"spring.datasource.public.jdbcUrl", "spring.datasource.multiple-enabled"})
+public class PublicJdbcHealthCheck implements CheckHealth {
 
-  private JdbcTemplate jdbcTemplate;
+  private JdbcTemplate publicJdbcTemplate;
 
-  public JdbcHealthCheck(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
+  public PublicJdbcHealthCheck(JdbcTemplate publicJdbcTemplate) {
+    this.publicJdbcTemplate = publicJdbcTemplate;
   }
 
   @Override
   public String getName() {
-    return "Jdbc Health Check";
+    return "Public Jdbc Health Check";
   }
 
   @Override
   public Health check() {
-    return JdbcHealthCheckUtil.performCheck(getName(), jdbcTemplate);
+    return JdbcHealthCheckUtil.performCheck(getName(), publicJdbcTemplate);
   }
 }
