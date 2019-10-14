@@ -46,6 +46,10 @@ public class EventConfigurationSpringTest {
   public void createsEventHubBasedMonitorBean_WhenConfigured() {
     this.contextRunner
         .withPropertyValues("monitoring.type=event-hub")
+        .withPropertyValues("monitoring.event-hub.namespace=foo")
+        .withPropertyValues("monitoring.event-hub.name=foo")
+        .withPropertyValues("monitoring.event-hub.key.name=foo")
+        .withPropertyValues("monitoring.event-hub.key.value=bar")
         .run(context -> {
           assertThat(context).hasSingleBean(EventHubBasedMonitor.class);
           assertThat(context).hasSingleBean(EventHubClient.class);

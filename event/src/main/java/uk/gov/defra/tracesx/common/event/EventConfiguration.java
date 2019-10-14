@@ -59,7 +59,8 @@ public class EventConfiguration {
           .setSasKey(eventHubKeyValue);
       ScheduledExecutorService executorService =
           Executors.newScheduledThreadPool(EVENT_HUB_THREAD_POOL_SIZE);
-      return EventHubClient.createSync(connectionString.toString(), executorService);
+      return EventHubClient
+          .createFromConnectionStringSync(connectionString.toString(), executorService);
     } catch (EventHubException | IOException exception) {
       return null;
     }
