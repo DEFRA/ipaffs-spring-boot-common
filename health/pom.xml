@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
-  <version>1.0.14</version>
+  <version>1.0.15-SNAPSHOT</version>
   <name>health</name>
 
   <parent>
@@ -36,7 +36,7 @@
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>1.0.14-30</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
