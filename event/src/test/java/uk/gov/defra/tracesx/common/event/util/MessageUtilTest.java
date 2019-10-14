@@ -36,6 +36,7 @@ public class MessageUtilTest {
         .user("user")
         .sessionId("session")
         .component(Component.BORDERNOTIFICATION_MICROSERVICE)
+        .environment("environment")
         .details(Details.builder()
             .transactionCode(TransactionCode.IPAFFS_404)
             .message("message")

@@ -53,6 +53,9 @@ public class Message {
   @NotNull
   private Details details;
 
+  @NotNull
+  private String environment;
+
   public static Message.MessageBuilder getDefaultMessageBuilder() {
     return Message.builder()
         .dateTime(LocalDateTime.now().toString())
