@@ -17,6 +17,7 @@ public class LogBasedMonitor implements ProtectiveMonitor {
 
   @Override
   public void sendMessage(Message message) {
+    messageUtil.setDeploymentEnvironment(message);
     LOGGER.info(messageUtil.writeMessage(message));
   }
 }

@@ -63,4 +63,14 @@ public class AppInsightsBasedMonitorTest {
     message.setPriority(Priority.CRITICAL);
     verify(logBasedMonitor).sendMessage(message);
   }
+
+  @Test
+  public void sendMessage_CallsSetDeploymentEnvironment() {
+    Message message = Message.getDefaultMessageBuilder().build();
+    when(messageUtil.writeMessage(message)).thenReturn("Message");
+
+    appInsightsBasedMonitor.sendMessage(message);
+
+    verify(messageUtil, times(1)).setDeploymentEnvironment(message);
+  }
 }

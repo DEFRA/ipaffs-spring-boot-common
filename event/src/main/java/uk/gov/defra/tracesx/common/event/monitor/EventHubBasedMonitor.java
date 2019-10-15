@@ -24,6 +24,7 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
 
   @Override
   public void sendMessage(Message message) {
+    messageUtil.setDeploymentEnvironment(message);
     byte[] payloadBytes = messageUtil.writeMessageToBytes(message);
     EventData sendEvent = EventData.create(payloadBytes);
     try {

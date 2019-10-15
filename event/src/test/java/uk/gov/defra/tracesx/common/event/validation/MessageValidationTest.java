@@ -14,12 +14,13 @@ import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 public class MessageValidationTest {
 
   private static final String MAX_LENGTH_STRING = StringUtils.repeat("a", 81);
+  private static final String DEPLOYMENT_ENVIRONMENT = "env";
 
   private MessageUtil messageUtil;
 
   @Before
   public void setUp() {
-    messageUtil = new MessageUtil(new ObjectMapper());
+    messageUtil = new MessageUtil(new ObjectMapper(), DEPLOYMENT_ENVIRONMENT);
   }
 
   @Test
@@ -117,7 +118,8 @@ public class MessageValidationTest {
         .hasMessageContaining("ip must not be null")
         .hasMessageContaining("pmcCode must not be null")
         .hasMessageContaining("priority must not be null")
-        .hasMessageContaining("details must not be null");
+        .hasMessageContaining("details must not be null")
+        .hasMessageContaining("environment must not be null");
   }
 
   @Test
@@ -215,6 +217,7 @@ public class MessageValidationTest {
         .hasMessageContaining("ip must not be null")
         .hasMessageContaining("pmcCode must not be null")
         .hasMessageContaining("priority must not be null")
-        .hasMessageContaining("details must not be null");
+        .hasMessageContaining("details must not be null")
+        .hasMessageContaining("environment must not be null");
   }
 }

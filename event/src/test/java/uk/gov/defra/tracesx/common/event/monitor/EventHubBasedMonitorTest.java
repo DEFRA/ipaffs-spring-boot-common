@@ -79,4 +79,15 @@ public class EventHubBasedMonitorTest {
     message.setPriority(Priority.CRITICAL);
     verify(appInsightsBasedMonitor).sendMessage(message);
   }
+
+  @Test
+  public void sendMessage_CallsSetDeploymentEnvironment() throws JsonProcessingException {
+    Message message = Message.getDefaultMessageBuilder().build();
+    byte[] bytes = new ObjectMapper().writeValueAsBytes(message);
+    when(messageUtil.writeMessageToBytes(message)).thenReturn(bytes);
+
+    eventHubBasedMonitor.sendMessage(message);
+
+    verify(messageUtil, times(1)).setDeploymentEnvironment(message);
+  }
 }
