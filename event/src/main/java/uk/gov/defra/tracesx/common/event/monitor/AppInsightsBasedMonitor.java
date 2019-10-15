@@ -28,6 +28,7 @@ public class AppInsightsBasedMonitor implements ProtectiveMonitor {
   @Override
   public void sendMessage(Message message) {
     try {
+      messageUtil.setDeploymentEnvironment(message);
       Map<String, String> properties =
           Collections.singletonMap("data", messageUtil.writeMessage(message));
       telemetryClient.trackEvent(MONITORING_EVENT_METRIC, properties, null);

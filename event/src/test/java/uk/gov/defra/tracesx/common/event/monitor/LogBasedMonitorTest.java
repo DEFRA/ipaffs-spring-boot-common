@@ -30,4 +30,12 @@ public class LogBasedMonitorTest {
 
     verify(messageUtil, times(1)).writeMessage(message);
   }
+
+  @Test
+  public void sendMessage_CallsSetDeploymentEnvironment() {
+    Message message = Message.getDefaultMessageBuilder().build();
+    logBasedMonitor.sendMessage(message);
+
+    verify(messageUtil, times(1)).setDeploymentEnvironment(message);
+  }
 }

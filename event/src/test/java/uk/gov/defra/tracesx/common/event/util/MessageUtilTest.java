@@ -22,21 +22,24 @@ import uk.gov.defra.tracesx.common.event.model.TransactionCode;
 @RunWith(MockitoJUnitRunner.class)
 public class MessageUtilTest {
 
+  private static final String DEPLOYMENT_ENVIRONMENT = "env";
+
   @Mock
   private ObjectMapper objectMapper;
 
-  @InjectMocks
   private MessageUtil messageUtil;
 
   private Message message;
 
   @Before
   public void setUp() {
+    messageUtil = new MessageUtil(objectMapper, DEPLOYMENT_ENVIRONMENT);
+
     message = Message.getDefaultMessageBuilder()
         .user("user")
         .sessionId("session")
         .component(Component.BORDERNOTIFICATION_MICROSERVICE)
-        .environment("environment")
+        .environment("some other environment")
         .details(Details.builder()
             .transactionCode(TransactionCode.IPAFFS_404)
             .message("message")
@@ -78,5 +81,13 @@ public class MessageUtilTest {
     assertThatThrownBy(() -> messageUtil.writeMessageToBytes(message))
         .isInstanceOf(ProtectiveMonitorJsonProcessingException.class)
         .hasMessage("Unable to convert ProtectiveMonitor Message to byte array");
+  }
+
+  @Test
+  public void setDeployEnvironment_SetsTheDeploymentEnvironment() {
+    Message message = new Message();
+    messageUtil.setDeploymentEnvironment(message);
+
+    assertEquals(DEPLOYMENT_ENVIRONMENT, message.getEnvironment());
   }
 }

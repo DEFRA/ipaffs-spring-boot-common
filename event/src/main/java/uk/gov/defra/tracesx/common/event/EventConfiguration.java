@@ -36,6 +36,9 @@ public class EventConfiguration {
   @Value("${monitoring.event-hub.key.value:#{null}}")
   private String eventHubKeyValue;
 
+  @Value("${server.deploymentEnvironment}")
+  private String deploymentEnvironment;
+
   private LogBasedMonitor logBasedMonitor;
   private AppInsightsBasedMonitor appInsightsBasedMonitor;
 
@@ -64,7 +67,7 @@ public class EventConfiguration {
 
   @Bean
   public MessageUtil createMessageUtil() {
-    return new MessageUtil(new ObjectMapper());
+    return new MessageUtil(new ObjectMapper(), deploymentEnvironment);
   }
 
   @Bean
@@ -82,7 +85,8 @@ public class EventConfiguration {
   @Bean
   @ConditionalOnProperty(name = "monitoring.type", havingValue = "event-hub")
   public EventHubBasedMonitor createEventHubProtectiveMonitor() {
-    return new EventHubBasedMonitor(getAppInsightsBasedMonitor(),
+    return new EventHubBasedMonitor(
+        getAppInsightsBasedMonitor(),
         createEventHubClient(),
         createMessageUtil());
   }
