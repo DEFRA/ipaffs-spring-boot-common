@@ -32,10 +32,10 @@ public class LogBasedMonitorTest {
   }
 
   @Test
-  public void sendMessage_CallsSetDeploymentEnvironment() {
+  public void sendMessage_CallsSetEventHubEnvironment() {
     Message message = Message.getDefaultMessageBuilder().build();
     logBasedMonitor.sendMessage(message);
 
-    verify(messageUtil, times(1)).setDeploymentEnvironment(message);
+    verify(messageUtil, times(1)).setEventHubEnvironment(message);
   }
 }

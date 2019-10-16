@@ -15,15 +15,15 @@ import javax.validation.ValidatorFactory;
 public class MessageUtil {
 
   private final ObjectMapper objectMapper;
-  private final String deploymentEnvironment;
+  private final String eventHubEnvironment;
 
-  public MessageUtil(ObjectMapper objectMapper, String deploymentEnvironment) {
+  public MessageUtil(ObjectMapper objectMapper, String eventHubEnvironment) {
     this.objectMapper = objectMapper;
-    this.deploymentEnvironment = deploymentEnvironment;
+    this.eventHubEnvironment = eventHubEnvironment;
   }
 
-  public void setDeploymentEnvironment(Message message) {
-    message.setEnvironment(deploymentEnvironment);
+  public void setEventHubEnvironment(Message message) {
+    message.setEventHubEnvironment(eventHubEnvironment);
   }
 
   public String writeMessage(Message message) throws MessageValidationException {

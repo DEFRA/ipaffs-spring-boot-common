@@ -22,7 +22,7 @@ import uk.gov.defra.tracesx.common.event.model.TransactionCode;
 @RunWith(MockitoJUnitRunner.class)
 public class MessageUtilTest {
 
-  private static final String DEPLOYMENT_ENVIRONMENT = "env";
+  private static final String EVENT_HUB_ENVIRONMENT = "env";
 
   @Mock
   private ObjectMapper objectMapper;
@@ -33,13 +33,13 @@ public class MessageUtilTest {
 
   @Before
   public void setUp() {
-    messageUtil = new MessageUtil(objectMapper, DEPLOYMENT_ENVIRONMENT);
+    messageUtil = new MessageUtil(objectMapper, EVENT_HUB_ENVIRONMENT);
 
     message = Message.getDefaultMessageBuilder()
         .user("user")
         .sessionId("session")
         .component(Component.BORDERNOTIFICATION_MICROSERVICE)
-        .environment("some other environment")
+        .eventHubEnvironment("some other environment")
         .details(Details.builder()
             .transactionCode(TransactionCode.IPAFFS_404)
             .message("message")
@@ -84,10 +84,10 @@ public class MessageUtilTest {
   }
 
   @Test
-  public void setDeployEnvironment_SetsTheDeploymentEnvironment() {
+  public void setDeployEnvironment_SetsTheEventHubEnvironment() {
     Message message = new Message();
-    messageUtil.setDeploymentEnvironment(message);
+    messageUtil.setEventHubEnvironment(message);
 
-    assertEquals(DEPLOYMENT_ENVIRONMENT, message.getEnvironment());
+    assertEquals(EVENT_HUB_ENVIRONMENT, message.getEventHubEnvironment());
   }
 }

@@ -36,8 +36,8 @@ public class EventConfiguration {
   @Value("${monitoring.event-hub.key.value:#{null}}")
   private String eventHubKeyValue;
 
-  @Value("${server.deploymentEnvironment}")
-  private String deploymentEnvironment;
+  @Value("${monitoring.event-hub.environment}")
+  private String eventHubEnvironment;
 
   private LogBasedMonitor logBasedMonitor;
   private AppInsightsBasedMonitor appInsightsBasedMonitor;
@@ -67,7 +67,7 @@ public class EventConfiguration {
 
   @Bean
   public MessageUtil createMessageUtil() {
-    return new MessageUtil(new ObjectMapper(), deploymentEnvironment);
+    return new MessageUtil(new ObjectMapper(), eventHubEnvironment);
   }
 
   @Bean
