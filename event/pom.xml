@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common-Event</artifactId>
-    <version>1.0.16</version>
+    <version>1.0.17-SNAPSHOT</version>
     <name>event</name>
 
     <parent>
@@ -40,7 +40,7 @@
 
     <scm>
         <connection>${parent.scm.connection}</connection>
-        <tag>1.0.16-34</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
