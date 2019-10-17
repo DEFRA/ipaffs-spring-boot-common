@@ -54,7 +54,7 @@ public class Message {
   private Details details;
 
   @NotNull
-  private String environment;
+  private String eventHubEnvironment;
 
   public static Message.MessageBuilder getDefaultMessageBuilder() {
     return Message.builder()

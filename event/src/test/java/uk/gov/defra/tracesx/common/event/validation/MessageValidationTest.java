@@ -119,7 +119,7 @@ public class MessageValidationTest {
         .hasMessageContaining("pmcCode must not be null")
         .hasMessageContaining("priority must not be null")
         .hasMessageContaining("details must not be null")
-        .hasMessageContaining("environment must not be null");
+        .hasMessageContaining("eventHubEnvironment must not be null");
   }
 
   @Test
@@ -218,6 +218,6 @@ public class MessageValidationTest {
         .hasMessageContaining("pmcCode must not be null")
         .hasMessageContaining("priority must not be null")
         .hasMessageContaining("details must not be null")
-        .hasMessageContaining("environment must not be null");
+        .hasMessageContaining("eventHubEnvironment must not be null");
   }
 }

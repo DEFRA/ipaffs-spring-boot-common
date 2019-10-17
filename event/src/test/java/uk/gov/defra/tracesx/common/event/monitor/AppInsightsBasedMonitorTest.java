@@ -65,12 +65,12 @@ public class AppInsightsBasedMonitorTest {
   }
 
   @Test
-  public void sendMessage_CallsSetDeploymentEnvironment() {
+  public void sendMessage_CallsSetEventHubEnvironment() {
     Message message = Message.getDefaultMessageBuilder().build();
     when(messageUtil.writeMessage(message)).thenReturn("Message");
 
     appInsightsBasedMonitor.sendMessage(message);
 
-    verify(messageUtil, times(1)).setDeploymentEnvironment(message);
+    verify(messageUtil, times(1)).setEventHubEnvironment(message);
   }
 }
