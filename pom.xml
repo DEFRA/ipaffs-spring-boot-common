@@ -20,7 +20,6 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
     <!-- Spring Boot dependency version overrides -->
     <jackson.version>2.9.10</jackson.version>
     <!-- End Spring Boot dependency version overrides -->
@@ -30,8 +29,11 @@
     <checkstyle.version>3.0.0</checkstyle.version>
     <javax.el.version>3.0.0</javax.el.version>
     <lucene.version>8.2.0</lucene.version>
+    <lombok-maven-plugin.version>1.18.6.0</lombok-maven-plugin.version>
+    <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.web.javax.el.version>2.2.6</org.glassfish.web.javax.el.version>
     <rest-assured.version>3.3.0</rest-assured.version>
+    <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
   </properties>
 
   <scm>
@@ -122,6 +124,24 @@
           <execution>
             <goals>
               <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok-maven-plugin</artifactId>
+        <version>${lombok-maven-plugin.version}</version>
+        <configuration>
+          <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+          <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
+          <addOutputDirectory>false</addOutputDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>delombok</goal>
             </goals>
           </execution>
         </executions>
