@@ -3,39 +3,17 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Health-Tests</artifactId>
-  <version>1.0.17-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
   <name>health-tests</name>
   <description>An integration test library for testing correct deployment of the Shared Spring Boot health
     Configuration
   </description>
 
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-dependencies</artifactId>
-    <version>2.0.9.RELEASE</version>
+    <groupId>uk.gov.defra.tracesx</groupId>
+    <artifactId>TracesX-SpringBoot-Common</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <!-- Spring Boot dependency version overrides -->
-    <jackson.version>2.9.10</jackson.version>
-    <!-- End Spring Boot dependency version overrides -->
-
-    <maven.checkstyle.version>3.0.0</maven.checkstyle.version>
-    <restassured.version>3.3.0</restassured.version>
-  </properties>
-
-  <distributionManagement>
-    <repository>
-      <id>release</id>
-      <name>Releases</name>
-      <url>${repo.releases.url}</url>
-    </repository>
-  </distributionManagement>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
@@ -44,51 +22,24 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>${restassured.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
     </dependency>
   </dependencies>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>${maven.checkstyle.version}</version>
-          <configuration>
-            <configLocation>google_checks.xml</configLocation>
-            <logViolationsToConsole>true</logViolationsToConsole>
-            <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
-            <violationSeverity>warning</violationSeverity>
-            <failsOnError>true</failsOnError>
-            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
 </project>

@@ -1,14 +1,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>TracesX-SpringBoot-Common</artifactId>
-  <version>1.0.17-SNAPSHOT</version>
-  <name>common-parent</name>
-  <description>Shared Spring Boot: Common Libraries Aggregator Module</description>
-  <packaging>pom</packaging>
   <groupId>uk.gov.defra.tracesx</groupId>
+  <artifactId>TracesX-SpringBoot-Common</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
+  <name>common-parent</name>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-dependencies</artifactId>
+    <version>2.1.9.RELEASE</version>
+  </parent>
 
   <properties>
     <project.scm.id>gitlab</project.scm.id>
+
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Spring Boot dependency version overrides -->
+    <jackson.version>2.9.10</jackson.version>
+    <!-- End Spring Boot dependency version overrides -->
+
+    <applicationinsights-core.version>2.5.0</applicationinsights-core.version>
+    <azure-eventhubs.version>3.0.1</azure-eventhubs.version>
+    <checkstyle.version>3.0.0</checkstyle.version>
+    <javax.el.version>3.0.0</javax.el.version>
+    <lucene.version>8.2.0</lucene.version>
+    <org.glassfish.web.javax.el.version>2.2.6</org.glassfish.web.javax.el.version>
+    <rest-assured.version>3.3.0</rest-assured.version>
   </properties>
 
   <scm>
@@ -31,6 +54,45 @@
     </repository>
   </distributionManagement>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>${lucene.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>applicationinsights-core</artifactId>
+        <version>${applicationinsights-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-eventhubs</artifactId>
+        <version>${azure-eventhubs.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.el</groupId>
+        <artifactId>javax.el-api</artifactId>
+        <version>${javax.el.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>javax.el</artifactId>
+        <version>${org.glassfish.web.javax.el.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- TEST Dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <build>
     <pluginManagement>
     <plugins>
@@ -43,7 +105,34 @@
           <releaseProfiles>release</releaseProfiles>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${checkstyle.version}</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <logViolationsToConsole>true</logViolationsToConsole>
+          <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+          <violationSeverity>warning</violationSeverity>
+          <failsOnError>true</failsOnError>
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 </project>
