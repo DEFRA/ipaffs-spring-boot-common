@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +31,8 @@ public class HealthCheckConfiguration {
   @Qualifier("defaultHealthCheckRestTemplate")
   public RestTemplate defaultHealthCheckRestTemplate() {
     return new RestTemplateBuilder()
-        .setConnectTimeout(connectTimeout)
-        .setReadTimeout(readTimeout)
+        .setConnectTimeout(Duration.ofSeconds((long) connectTimeout))
+        .setReadTimeout(Duration.ofSeconds((long) readTimeout))
         .build();
   }
 
