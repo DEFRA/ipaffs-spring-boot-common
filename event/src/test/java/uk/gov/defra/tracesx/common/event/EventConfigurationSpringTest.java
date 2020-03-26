@@ -2,8 +2,9 @@ package uk.gov.defra.tracesx.common.event;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
+import com.azure.messaging.eventhubs.EventHubProducerClient;
 import com.microsoft.applicationinsights.TelemetryClient;
-import com.microsoft.azure.eventhubs.EventHubClient;
+
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -25,7 +26,7 @@ public class EventConfigurationSpringTest {
       assertThat(context).hasSingleBean(LogBasedMonitor.class);
       assertThat(context).doesNotHaveBean(AppInsightsBasedMonitor.class);
       assertThat(context).doesNotHaveBean(EventHubBasedMonitor.class);
-      assertThat(context).doesNotHaveBean(EventHubClient.class);
+      assertThat(context).doesNotHaveBean(EventHubProducerClient.class);
       assertThat(context).doesNotHaveBean(CircuitBreakerRegistry.class);
     });
   }
@@ -38,7 +39,7 @@ public class EventConfigurationSpringTest {
           assertThat(context).hasSingleBean(LogBasedMonitor.class);
           assertThat(context).doesNotHaveBean(AppInsightsBasedMonitor.class);
           assertThat(context).doesNotHaveBean(EventHubBasedMonitor.class);
-          assertThat(context).doesNotHaveBean(EventHubClient.class);
+          assertThat(context).doesNotHaveBean(EventHubProducerClient.class);
           assertThat(context).doesNotHaveBean(CircuitBreakerRegistry.class);
         });
   }
@@ -51,7 +52,7 @@ public class EventConfigurationSpringTest {
           assertThat(context).hasSingleBean(AppInsightsBasedMonitor.class);
           assertThat(context).doesNotHaveBean(LogBasedMonitor.class);
           assertThat(context).doesNotHaveBean(EventHubBasedMonitor.class);
-          assertThat(context).doesNotHaveBean(EventHubClient.class);
+          assertThat(context).doesNotHaveBean(EventHubProducerClient.class);
           assertThat(context).doesNotHaveBean(CircuitBreakerRegistry.class);
         });
   }
@@ -66,7 +67,7 @@ public class EventConfigurationSpringTest {
         .withPropertyValues("monitoring.event-hub.key.value=bar")
         .run(context -> {
           assertThat(context).hasSingleBean(EventHubBasedMonitor.class);
-          assertThat(context).hasSingleBean(EventHubClient.class);
+          assertThat(context).hasSingleBean(EventHubProducerClient.class);
           assertThat(context).hasSingleBean(CircuitBreakerRegistry.class);
           assertThat(context).doesNotHaveBean(AppInsightsBasedMonitor.class);
           assertThat(context).doesNotHaveBean(LogBasedMonitor.class);

@@ -25,7 +25,7 @@
     <!-- End Spring Boot dependency version overrides -->
 
     <applicationinsights-core.version>2.5.0</applicationinsights-core.version>
-    <azure-eventhubs.version>3.0.1</azure-eventhubs.version>
+    <azure-eventhubs.version>5.0.2</azure-eventhubs.version>
     <checkstyle.version>3.0.0</checkstyle.version>
     <io.github.resilience4j.version>1.1.0</io.github.resilience4j.version>
     <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
@@ -71,8 +71,8 @@
         <version>${applicationinsights-core.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.microsoft.azure</groupId>
-        <artifactId>azure-eventhubs</artifactId>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-messaging-eventhubs</artifactId>
         <version>${azure-eventhubs.version}</version>
       </dependency>
       <dependency>

@@ -1,8 +1,6 @@
 package uk.gov.defra.tracesx.common.event.monitor;
 
-import com.microsoft.azure.eventhubs.EventData;
-import com.microsoft.azure.eventhubs.EventHubClient;
-import com.microsoft.azure.eventhubs.EventHubException;
+import com.azure.messaging.eventhubs.EventData;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.vavr.control.Try;
@@ -21,16 +19,16 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
 
   private final AppInsightsBasedMonitor appInsightsBasedMonitor;
   private final CircuitBreakerRegistry circuitBreakerRegistry;
-  private final EventHubClient eventHubClient;
+  private final EventHubBasedMonitorHelper eventHubBasedMonitorHelper;
   private final MessageUtil messageUtil;
 
   public EventHubBasedMonitor(
       AppInsightsBasedMonitor appInsightsBasedMonitor,
-      EventHubClient eventHubClient,
+      EventHubBasedMonitorHelper eventHubBasedMonitorHelper,
       MessageUtil messageUtil,
       CircuitBreakerRegistry circuitBreakerRegistry) {
     this.appInsightsBasedMonitor = appInsightsBasedMonitor;
-    this.eventHubClient = eventHubClient;
+    this.eventHubBasedMonitorHelper = eventHubBasedMonitorHelper;
     this.messageUtil = messageUtil;
     this.circuitBreakerRegistry = circuitBreakerRegistry;
   }
@@ -39,25 +37,22 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
   public void sendMessage(Message message) {
     messageUtil.setEventHubEnvironment(message);
     byte[] payloadBytes = messageUtil.writeMessageToBytes(message);
-    EventData sendEvent = EventData.create(payloadBytes);
-
+    EventData sendEvent = new EventData(payloadBytes);
     CircuitBreaker circuitBreaker = circuitBreakerRegistry.circuitBreaker(CIRCUIT_BREAKER_NAME);
-
     Supplier<String> decoratedSupplier =
         CircuitBreaker.decorateSupplier(circuitBreaker, () -> sendSync(sendEvent, message));
-
     Try.ofSupplier(decoratedSupplier).recover(throwable -> logToAppInsights(message)).get();
-
     String state = circuitBreaker.getState().name();
     LOGGER.info(String.format("CircuitBreaker state is %s", state));
   }
 
   private String sendSync(EventData eventData, Message message) {
     try {
-      eventHubClient.sendSync(eventData);
+      eventHubBasedMonitorHelper.sendBatchData(eventData);
       appInsightsBasedMonitor.sendMessage(message);
-    } catch (EventHubException | NullPointerException exception) {
-      throw new RuntimeException();
+    } catch (Exception exception) {
+      LOGGER.error(exception.toString());
+      throw new RuntimeException(exception);
     }
     return "Successfully logged to Event Hub";
   }
