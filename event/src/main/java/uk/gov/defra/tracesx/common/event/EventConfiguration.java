@@ -98,7 +98,6 @@ public class EventConfiguration {
         eventHubKeyName, eventHubKeyValue);
     EventHubClientBuilder eventHubClientBuilder = new EventHubClientBuilder();
     eventHubClientBuilder = eventHubClientBuilder.connectionString(connectionString);
-    EventHubProducerClient eventHubProducerClient = new EventHubProducerClient()
     return eventHubClientBuilder.buildProducerClient();
   }
 
@@ -107,7 +106,7 @@ public class EventConfiguration {
     return String.format("Endpoint=sb://%s"
         + "servicebus.windows.ne/;SharedAccessKeyName=%s;SharedAccessKey=%s;"
         + "EntityPath=%s",
-        eventHubNamespace, eventHubKeyName, eventHubKeyValue, eventHubName;
+        eventHubNamespace, eventHubKeyName, eventHubKeyValue, eventHubName);
   }
 
   @Bean
