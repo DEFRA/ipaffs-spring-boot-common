@@ -5,5 +5,5 @@
   "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <!-- Empty suppressions file to facilitate common plugin config  -->
+  <suppress checks="Javadoc" files="."/>
 </suppressions>

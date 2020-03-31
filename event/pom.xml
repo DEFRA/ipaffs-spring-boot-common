@@ -35,8 +35,8 @@
             <artifactId>applicationinsights-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.azure</groupId>
-            <artifactId>azure-messaging-eventhubs</artifactId>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-eventhubs</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
