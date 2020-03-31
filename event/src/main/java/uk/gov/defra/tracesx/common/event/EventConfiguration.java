@@ -1,10 +1,11 @@
 package uk.gov.defra.tracesx.common.event;
 
-import com.azure.messaging.eventhubs.EventHubClientBuilder;
-import com.azure.messaging.eventhubs.EventHubProducerClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.applicationinsights.TelemetryClient;
 import com.microsoft.applicationinsights.TelemetryConfiguration;
+import com.microsoft.azure.eventhubs.ConnectionStringBuilder;
+import com.microsoft.azure.eventhubs.EventHubClient;
+import com.microsoft.azure.eventhubs.EventHubException;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,14 +14,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.gov.defra.tracesx.common.event.monitor.AppInsightsBasedMonitor;
 import uk.gov.defra.tracesx.common.event.monitor.EventHubBasedMonitor;
-import uk.gov.defra.tracesx.common.event.monitor.EventHubBasedMonitorHelper;
 import uk.gov.defra.tracesx.common.event.monitor.LogBasedMonitor;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 
+import java.io.IOException;
 import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 public class EventConfiguration {
+
+  private static final int EVENT_HUB_THREAD_POOL_SIZE = 4;
 
   @Value("${monitoring.event-hub.namespace:#{null}}")
   private String eventHubNamespace;
@@ -93,20 +98,21 @@ public class EventConfiguration {
 
   @Bean
   @ConditionalOnProperty(name = "monitoring.type", havingValue = "event-hub")
-  public EventHubProducerClient createEventHubClient() {
-    String connectionString = getConnectionString(eventHubName, eventHubNamespace,
-        eventHubKeyName, eventHubKeyValue);
-    EventHubClientBuilder eventHubClientBuilder = new EventHubClientBuilder();
-    eventHubClientBuilder = eventHubClientBuilder.connectionString(connectionString);
-    return eventHubClientBuilder.buildProducerClient();
-  }
-
-  private String getConnectionString(String eventHubName, String eventHubNamespace,
-      String eventHubKeyName, String eventHubKeyValue) {
-    return String.format("Endpoint=sb://%s"
-        + "servicebus.windows.ne/;SharedAccessKeyName=%s;SharedAccessKey=%s;"
-        + "EntityPath=%s",
-        eventHubNamespace, eventHubKeyName, eventHubKeyValue, eventHubName);
+  public EventHubClient createEventHubClient() {
+    try {
+      ConnectionStringBuilder connectionString =
+          new ConnectionStringBuilder()
+              .setNamespaceName(eventHubNamespace)
+              .setEventHubName(eventHubName)
+              .setSasKeyName(eventHubKeyName)
+              .setSasKey(eventHubKeyValue);
+      ScheduledExecutorService executorService =
+          Executors.newScheduledThreadPool(EVENT_HUB_THREAD_POOL_SIZE);
+      return EventHubClient.createFromConnectionStringSync(
+          connectionString.toString(), executorService);
+    } catch (EventHubException | IOException exception) {
+      return null;
+    }
   }
 
   @Bean
@@ -131,7 +137,7 @@ public class EventConfiguration {
   public EventHubBasedMonitor createEventHubProtectiveMonitor() {
     return new EventHubBasedMonitor(
         getAppInsightsBasedMonitor(),
-        new EventHubBasedMonitorHelper(createEventHubClient()),
+        createEventHubClient(),
         createMessageUtil(),
         createCircuitBreakerRegistry());
   }

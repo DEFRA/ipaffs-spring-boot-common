@@ -2,15 +2,15 @@ package uk.gov.defra.tracesx.common.event.monitor;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.azure.messaging.eventhubs.EventData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import com.microsoft.azure.eventhubs.EventData;
+import com.microsoft.azure.eventhubs.EventHubClient;
+import com.microsoft.azure.eventhubs.EventHubException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class EventHubBasedMonitorTest {
   private AppInsightsBasedMonitor appInsightsBasedMonitor;
 
   @Mock
-  private EventHubBasedMonitorHelper eventHubBasedMonitorHelper;
+  private EventHubClient eventHubClient;
 
   @InjectMocks
   private EventHubBasedMonitor eventHubBasedMonitor;
@@ -47,36 +47,34 @@ public class EventHubBasedMonitorTest {
   private CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("testCircuitBreaker");
   private Message message = Message.getDefaultMessageBuilder().build();
 
-  private byte[] payloadBytes;
-
   @Before
   public void before() throws JsonProcessingException {
-    payloadBytes = new ObjectMapper().writeValueAsBytes(message);
+    byte[] payloadBytes = new ObjectMapper().writeValueAsBytes(message);
     when(messageUtil.writeMessageToBytes(any())).thenReturn(payloadBytes);
     when(circuitBreakerRegistry.circuitBreaker(any())).thenReturn(circuitBreaker);
   }
 
   @Test
-  public void sendMessage_CallsEventHubClientAndAppInsights() throws Exception {
-    doNothing().when(eventHubBasedMonitorHelper).sendBatchData(any(EventData.class));
+  public void sendMessage_CallsEventHubClientAndAppInsights() throws EventHubException {
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).writeMessageToBytes(message);
-    verify(eventHubBasedMonitorHelper).sendBatchData((any(EventData.class)));
+    verify(eventHubClient).sendSync(any(EventData.class));
     verify(appInsightsBasedMonitor).sendMessage(message);
     assertThat(circuitBreaker.getState().name()).isEqualTo(CLOSED);
   }
 
   @Test
-  public void sendMessage_CallsAppInsightsBasedMonitorOnEventHubException() {
-    doThrow(new RuntimeException())
-        .when(eventHubBasedMonitorHelper)
-        .sendBatchData(any(EventData.class));
+  public void sendMessage_CallsAppInsightsBasedMonitorOnEventHubException()
+      throws EventHubException {
+    doThrow(new EventHubException(true, DUMMY_MESSAGE))
+        .when(eventHubClient)
+        .sendSync(any(EventData.class));
 
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).writeMessageToBytes(message);
-    verify(eventHubBasedMonitorHelper).sendBatchData((any(EventData.class)));
+    verify(eventHubClient).sendSync(any(EventData.class));
 
     message.setPriority(Priority.CRITICAL);
     verify(appInsightsBasedMonitor).sendMessage(message);
@@ -84,10 +82,11 @@ public class EventHubBasedMonitorTest {
   }
 
   @Test
-  public void sendMessage_RegistersAFailureInCircuitBreakerOnEventHubException() {
-    doThrow(new RuntimeException())
-        .when(eventHubBasedMonitorHelper)
-        .sendBatchData(any(EventData.class));
+  public void sendMessage_RegistersAFailureInCircuitBreakerOnEventHubException()
+      throws EventHubException {
+    doThrow(new EventHubException(true, DUMMY_MESSAGE))
+        .when(eventHubClient)
+        .sendSync(any(EventData.class));
 
     final int initialNumberOfFailedCalls = circuitBreaker.getMetrics().getNumberOfFailedCalls();
 
@@ -99,15 +98,16 @@ public class EventHubBasedMonitorTest {
   }
 
   @Test
-  public void sendMessage_CallsAppInsightsBasedMonitorOnNullPointerException() {
-    doThrow(new RuntimeException())
-        .when(eventHubBasedMonitorHelper)
-        .sendBatchData(any(EventData.class));
+  public void sendMessage_CallsAppInsightsBasedMonitorOnNullPointerException()
+      throws EventHubException {
+    doThrow(new NullPointerException(DUMMY_MESSAGE))
+        .when(eventHubClient)
+        .sendSync(any(EventData.class));
 
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).writeMessageToBytes(message);
-    verify(eventHubBasedMonitorHelper).sendBatchData((any(EventData.class)));
+    verify(eventHubClient).sendSync(any(EventData.class));
 
     message.setPriority(Priority.CRITICAL);
     verify(appInsightsBasedMonitor).sendMessage(message);
@@ -116,7 +116,6 @@ public class EventHubBasedMonitorTest {
 
   @Test
   public void sendMessage_CallsSetEventHubEnvironment() {
-    doNothing().when(eventHubBasedMonitorHelper).sendBatchData(any(EventData.class));
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).setEventHubEnvironment(message);
