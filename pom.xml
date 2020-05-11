@@ -44,7 +44,6 @@
   </scm>
 
   <modules>
-    <module>antivirus</module>
     <module>azure</module>
     <module>event</module>
     <module>health</module>
