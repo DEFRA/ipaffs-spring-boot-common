@@ -35,7 +35,7 @@ public class JdbcHealthCheck implements CheckHealth {
     try {
       List<Object> results = jdbcTemplate.query("select 1", new SingleColumnRowMapper<>());
       if (results.size() != 1) {
-        LOGGER.error("{} failed simple query check {}", getName());
+        LOGGER.error("{} failed simple query check", getName());
         health = Health.down().withDetail(getName(), "Unavailable").build();
       } else {
         health = Health.up().build();
