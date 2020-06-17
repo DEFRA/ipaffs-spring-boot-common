@@ -32,7 +32,7 @@ public class HealthChecker implements HealthIndicator {
     return check -> {
       Health health = check.check();
       if (health.getStatus().equals(Status.DOWN)) {
-        LOGGER.error("{} is unhealthy - reason: {}", check.getName(), health.toString());
+        LOGGER.error("{} is unhealthy - reason: {}", check.getName(), health);
         return true;
       }
       return false;
