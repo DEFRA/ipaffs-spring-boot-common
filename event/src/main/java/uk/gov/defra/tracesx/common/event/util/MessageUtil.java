@@ -26,7 +26,7 @@ public class MessageUtil {
     message.setEventHubEnvironment(eventHubEnvironment);
   }
 
-  public String writeMessage(Message message) throws MessageValidationException {
+  public String writeMessage(Message message) {
     try {
       validate(message);
       return objectMapper.writeValueAsString(message);

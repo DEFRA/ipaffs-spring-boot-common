@@ -8,6 +8,7 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import uk.gov.defra.tracesx.common.event.exception.EventHubSendException;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.model.Priority;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
@@ -57,7 +58,7 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
       eventHubClient.sendSync(eventData);
       appInsightsBasedMonitor.sendMessage(message);
     } catch (EventHubException | NullPointerException exception) {
-      throw new RuntimeException();
+      throw new EventHubSendException("Sending to Event Hub failed due to exception: " + exception);
     }
     return "Successfully logged to Event Hub";
   }
