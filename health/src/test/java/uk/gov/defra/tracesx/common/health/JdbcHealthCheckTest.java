@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.actuate.health.Health;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
@@ -37,6 +38,16 @@ public class JdbcHealthCheckTest {
 
     when(jdbcTemplate.query(eq("select 1"), any(SingleColumnRowMapper.class)))
         .thenReturn(new ArrayList());
+    Health health = new JdbcHealthCheck(jdbcTemplate).check();
+
+    assertEquals(health.getStatus(), Health.down().build().getStatus());
+  }
+
+  @Test
+  public void willReturnUnHealthy_WhenThrowException() {
+
+    when(jdbcTemplate.query(eq("select 1"), any(SingleColumnRowMapper.class)))
+        .thenThrow(new DataAccessException("message"){});
     Health health = new JdbcHealthCheck(jdbcTemplate).check();
 
     assertEquals(health.getStatus(), Health.down().build().getStatus());

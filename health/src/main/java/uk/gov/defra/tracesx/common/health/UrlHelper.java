@@ -15,4 +15,6 @@ public class UrlHelper {
     String param = String.format("%s=%s", API_VERSION, apiVersion);
     return String.format("%s/%s?%s", root, path, param);
   }
+
+  private UrlHelper() {}
 }

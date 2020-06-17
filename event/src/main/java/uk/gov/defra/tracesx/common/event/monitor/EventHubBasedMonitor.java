@@ -49,7 +49,7 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
     Try.ofSupplier(decoratedSupplier).recover(throwable -> logToAppInsights(message)).get();
 
     String state = circuitBreaker.getState().name();
-    LOGGER.info(String.format("CircuitBreaker state is %s", state));
+    LOGGER.info("CircuitBreaker state is {}", state);
   }
 
   private String sendSync(EventData eventData, Message message) {

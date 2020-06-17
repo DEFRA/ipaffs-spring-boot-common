@@ -15,7 +15,6 @@ public class UrlHelperTest {
 
     String url = buildAzureIndexSearchUrl("service", "index", "version");
 
-    assertEquals(
-        url, "https://service.search.windows.net/indexes/index/docs/search?api-version=version");
+    assertEquals("https://service.search.windows.net/indexes/index/docs/search?api-version=version", url);
   }
 }
