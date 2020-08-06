@@ -23,6 +23,7 @@ public class Details {
   private String message;
 
   @Length(max = 80)
-  private String additionalInfo;
+  @Builder.Default
+  private String additionalInfo = "";
 
 }

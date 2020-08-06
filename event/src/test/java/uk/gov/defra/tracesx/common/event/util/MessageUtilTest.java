@@ -39,7 +39,7 @@ public class MessageUtilTest {
         .user("user")
         .sessionId("session")
         .component(Component.BORDERNOTIFICATION_MICROSERVICE)
-        .eventHubEnvironment("some other environment")
+        .environment("some other environment")
         .details(Details.builder()
             .transactionCode(TransactionCode.IPAFFS_404)
             .message("message")
@@ -88,6 +88,6 @@ public class MessageUtilTest {
     Message message = new Message();
     messageUtil.setEventHubEnvironment(message);
 
-    assertEquals(EVENT_HUB_ENVIRONMENT, message.getEventHubEnvironment());
+    assertEquals(EVENT_HUB_ENVIRONMENT, message.getEnvironment());
   }
 }
