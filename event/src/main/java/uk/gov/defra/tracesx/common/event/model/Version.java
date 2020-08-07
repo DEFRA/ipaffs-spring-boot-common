@@ -2,12 +2,12 @@ package uk.gov.defra.tracesx.common.event.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum Application {
-  IPAFFS("APH001");
+public enum Version {
+  VERSION("1.1");
 
   private String value;
 
-  Application(String value) {
+  Version(String value) {
     this.value = value;
   }
 

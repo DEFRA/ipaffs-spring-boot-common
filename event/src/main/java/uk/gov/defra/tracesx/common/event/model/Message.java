@@ -10,7 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -54,13 +55,17 @@ public class Message {
   private Details details;
 
   @NotNull
-  private String eventHubEnvironment;
+  private String environment;
+
+  @NotNull
+  private Version version;
 
   public static Message.MessageBuilder getDefaultMessageBuilder() {
     return Message.builder()
-        .dateTime(LocalDateTime.now().toString())
+        .dateTime(ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT))
         .application(Application.IPAFFS)
         .priority(Priority.INFO)
+        .version(Version.VERSION)
         .ip(STATIC_IP);
   }
 }
