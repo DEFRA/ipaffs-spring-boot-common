@@ -26,3 +26,6 @@
 
 /health/target/
 /.idea/
+
+### Mac ###
+.DS_Store
