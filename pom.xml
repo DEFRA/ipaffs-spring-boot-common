@@ -47,6 +47,7 @@
     <module>event</module>
     <module>health</module>
     <module>health-tests</module>
+    <module>logging</module>
   </modules>
 
   <distributionManagement>
