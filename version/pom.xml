@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  <groupId>uk.gov.defra.tracesx</groupId>
-  <artifactId>TracesX-SpringBoot-Common-Azure</artifactId>
+  <artifactId>TracesX-SpringBoot-Common-Version</artifactId>
   <version>2.0.27</version>
-  <name>azure</name>
+  <name>version</name>
 
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
@@ -17,14 +17,22 @@
     <tag>2.0.27-107</tag>
   </scm>
 
+  <properties>
+    <azure.functions.java.library.version>2.0.1</azure.functions.java.library.version>
+    <system-lambda.version>1.2.1</system-lambda.version>
+  </properties>
+
   <dependencies>
     <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-core</artifactId>
+      <groupId>com.microsoft.azure.functions</groupId>
+      <artifactId>azure-functions-java-library</artifactId>
+      <version>${azure.functions.java.library.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
+      <groupId>com.github.stefanbirkner</groupId>
+      <artifactId>system-lambda</artifactId>
+      <version>${system-lambda.version}</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
