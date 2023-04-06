@@ -3,12 +3,11 @@ package uk.gov.defra.tracesx.common.event.monitor;
 import static uk.gov.defra.tracesx.common.event.util.Constants.MONITORING_EVENT_METRIC;
 
 import com.microsoft.applicationinsights.TelemetryClient;
+import java.util.Collections;
+import java.util.Map;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.model.Priority;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
-
-import java.util.Collections;
-import java.util.Map;
 
 public class AppInsightsBasedMonitor implements ProtectiveMonitor {
 
