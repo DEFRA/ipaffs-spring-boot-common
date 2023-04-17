@@ -3,15 +3,14 @@ package uk.gov.defra.tracesx.common.event.util;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import uk.gov.defra.tracesx.common.event.exception.MessageValidationException;
-import uk.gov.defra.tracesx.common.event.exception.ProtectiveMonitorJsonProcessingException;
-import uk.gov.defra.tracesx.common.event.model.Message;
-
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import uk.gov.defra.tracesx.common.event.exception.MessageValidationException;
+import uk.gov.defra.tracesx.common.event.exception.ProtectiveMonitorJsonProcessingException;
+import uk.gov.defra.tracesx.common.event.model.Message;
 
 public class MessageUtil {
 

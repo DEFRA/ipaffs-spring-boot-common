@@ -24,7 +24,8 @@
     <applicationinsights-core.version>2.6.2</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
-    <checkstyle.version>3.0.0</checkstyle.version>
+    <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
+    <checkstyle.version>10.8.1</checkstyle.version>
     <io.github.resilience4j.version>1.1.0</io.github.resilience4j.version>
     <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
     <javax.el.version>3.0.0</javax.el.version>
@@ -35,6 +36,9 @@
     <owasp.version>6.5.3</owasp.version>
     <rest-assured.version>3.3.0</rest-assured.version>
     <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
+    <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
+    <maven-remote-resources-plugin.version>3.0.0</maven-remote-resources-plugin.version>
+    <shared-resources.version>1.0.0</shared-resources.version>
   </properties>
 
   <scm>
@@ -155,9 +159,16 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.version}</version>
+        <version>${maven.checkstyle.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
-          <configLocation>google_checks.xml</configLocation>
+          <configLocation>${project.build.directory}/maven-shared-archive-resources/google_checks_ipaffs.xml</configLocation>
           <logViolationsToConsole>true</logViolationsToConsole>
           <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
           <violationSeverity>warning</violationSeverity>
@@ -234,6 +245,41 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+        <version>${maven-remote-resources-plugin.version}</version>
+        <configuration>
+          <resourceBundles>
+            <resourceBundle>uk.gov.defra.tracesx:shared-resources:${shared-resources.version}</resourceBundle>
+          </resourceBundles>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>com.rudikershaw.gitbuildhook</groupId>
+        <artifactId>git-build-hook-maven-plugin</artifactId>
+        <version>${git-build-hook-maven-plugin.version}</version>
+        <configuration>
+          <gitConfig>
+            <core.hooksPath>hooks</core.hooksPath>
+          </gitConfig>
+        </configuration>
+        <executions>
+          <execution>
+            <id>configure-git-hooks</id>
+            <goals>
+              <goal>configure</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     </pluginManagement>
     <plugins>
@@ -241,6 +287,33 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.rudikershaw.gitbuildhook</groupId>
+        <artifactId>git-build-hook-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>jenkins</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.rudikershaw.gitbuildhook</groupId>
+            <artifactId>git-build-hook-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>configure-git-hooks</id>
+                <phase>none</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

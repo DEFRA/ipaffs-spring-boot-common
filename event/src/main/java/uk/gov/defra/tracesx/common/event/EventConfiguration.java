@@ -8,6 +8,10 @@ import com.microsoft.azure.eventhubs.EventHubClient;
 import com.microsoft.azure.eventhubs.EventHubException;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +20,6 @@ import uk.gov.defra.tracesx.common.event.monitor.AppInsightsBasedMonitor;
 import uk.gov.defra.tracesx.common.event.monitor.EventHubBasedMonitor;
 import uk.gov.defra.tracesx.common.event.monitor.LogBasedMonitor;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
-
-import java.io.IOException;
-import java.time.Duration;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 public class EventConfiguration {

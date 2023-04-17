@@ -2,6 +2,7 @@ package uk.gov.defra.tracesx.common.health.checks;
 
 import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
 
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -13,8 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthParams;
-
-import java.util.Collections;
 
 @Component
 @ConditionalOnProperty(name = "azure.index-name")
