@@ -1,15 +1,14 @@
 package uk.gov.defra.tracesx.common.health;
 
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.actuate.health.Status;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
-
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class HealthChecker implements HealthIndicator {
 

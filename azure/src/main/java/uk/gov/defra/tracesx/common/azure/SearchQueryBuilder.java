@@ -1,12 +1,11 @@
 package uk.gov.defra.tracesx.common.azure;
 
+import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class SearchQueryBuilder {
 
