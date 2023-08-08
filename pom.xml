@@ -25,6 +25,10 @@
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
+    <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
+    <maven.help.plugin.version>3.4.0</maven.help.plugin.version>
+    <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
+    <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
     <checkstyle.version>10.8.1</checkstyle.version>
     <io.github.resilience4j.version>1.1.0</io.github.resilience4j.version>
     <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
@@ -56,6 +60,11 @@
   </modules>
 
   <distributionManagement>
+    <snapshotRepository>
+      <id>release</id>
+      <name>Snapshots</name>
+      <url>https://artifactoryv2.azure.defra.cloud/artifactory/maven-snapshots-local</url>
+    </snapshotRepository>
     <repository>
       <id>release</id>
       <name>Releases</name>
@@ -148,6 +157,21 @@
     <pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven.deploy.plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-help-plugin</artifactId>
+        <version>${maven.help.plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven.jar.plugin.version}</version>
+      </plugin>
+      <plugin>
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
         <configuration>
@@ -183,6 +207,11 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${maven.versions.plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.projectlombok</groupId>
