@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common</artifactId>
-  <version>2.0.32-SNAPSHOT</version>
+  <version>99.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
   <name>common-parent</name>
@@ -16,7 +16,7 @@
   <properties>
     <project.scm.id>gitlab</project.scm.id>
 
-    <java.version>11</java.version>
+    <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,10 +31,10 @@
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
     <checkstyle.version>10.8.1</checkstyle.version>
     <io.github.resilience4j.version>1.1.0</io.github.resilience4j.version>
-    <jacoco.maven.plugin.version>0.8.4</jacoco.maven.plugin.version>
+    <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
     <javax.el.version>3.0.0</javax.el.version>
     <lucene.version>8.2.0</lucene.version>
-    <lombok-maven-plugin.version>1.18.6.0</lombok-maven-plugin.version>
+    <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.web.javax.el.version>2.2.6</org.glassfish.web.javax.el.version>
     <owasp.version>8.2.1</owasp.version>
