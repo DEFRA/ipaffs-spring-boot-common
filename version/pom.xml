@@ -18,7 +18,7 @@
   </scm>
 
   <properties>
-    <azure.functions.java.library.version>2.0.1</azure.functions.java.library.version>
+    <azure.functions.java.library.version>3.0.0</azure.functions.java.library.version>
     <system-stubs.version>2.1.2</system-stubs.version>
   </properties>
 
