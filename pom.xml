@@ -42,7 +42,7 @@
   </properties>
 
   <scm>
-    <connection>scm:git:https://giteux.azure.defra.cloud/imports/spring-boot-common.git</connection>
+    <connection>scm:git:https://giteux.REMOVED/imports/spring-boot-common.git</connection>
     <tag>2.0.29-111</tag>
   </scm>
 
