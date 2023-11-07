@@ -25,9 +25,9 @@ public class HttpHealthParamsTest {
 
     HttpHealthParams params = new HttpHealthParams(url, name, httpEntity, HttpMethod.POST);
 
-    assertEquals(params.getUrl(), url);
-    assertEquals(params.getName(), name);
-    assertEquals(params.getEntity(), httpEntity);
-    assertEquals(params.getMethod(), HttpMethod.POST);
+    assertEquals(url, params.getUrl());
+    assertEquals(name, params.getName());
+    assertEquals(httpEntity, params.getEntity());
+    assertEquals(HttpMethod.POST, params.getMethod());
   }
 }

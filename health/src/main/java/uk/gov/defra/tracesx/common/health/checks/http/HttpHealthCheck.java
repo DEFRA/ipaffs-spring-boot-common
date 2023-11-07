@@ -30,7 +30,7 @@ public abstract class HttpHealthCheck implements CheckHealth {
   public Health check() {
 
     try {
-      ResponseEntity response =
+      ResponseEntity<String> response =
           restTemplate.exchange(
               httpHealthParams.getUrl(),
               httpHealthParams.getMethod(),
