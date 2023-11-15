@@ -92,7 +92,7 @@ public class EventHubBasedMonitorTest {
 
     eventHubBasedMonitor.sendMessage(message);
 
-    assertThat(initialNumberOfFailedCalls).isEqualTo(0);
+    assertThat(initialNumberOfFailedCalls).isZero();
     assertThat(circuitBreaker.getState().name()).isEqualTo(CLOSED);
     assertThat(circuitBreaker.getMetrics().getNumberOfFailedCalls()).isEqualTo(1);
   }

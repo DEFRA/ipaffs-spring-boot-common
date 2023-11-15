@@ -30,8 +30,8 @@ public class HealthCheckConfiguration {
   @Qualifier("defaultHealthCheckRestTemplate")
   public RestTemplate defaultHealthCheckRestTemplate() {
     return new RestTemplateBuilder()
-        .setConnectTimeout(Duration.ofSeconds((long) connectTimeout))
-        .setReadTimeout(Duration.ofSeconds((long) readTimeout))
+        .setConnectTimeout(Duration.ofSeconds(connectTimeout))
+        .setReadTimeout(Duration.ofSeconds(readTimeout))
         .build();
   }
 
