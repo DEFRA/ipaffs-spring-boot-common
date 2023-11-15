@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Health-Tests</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0</version>
   <name>health-tests</name>
   <description>An integration test library for testing correct deployment of the Shared Spring Boot health
     Configuration
@@ -12,12 +12,12 @@
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
   </parent>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>HEAD</tag>
+    <tag>3.0.0-117</tag>
   </scm>
 
   <dependencies>
