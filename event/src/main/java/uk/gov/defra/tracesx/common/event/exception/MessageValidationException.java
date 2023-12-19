@@ -1,8 +1,8 @@
 package uk.gov.defra.tracesx.common.event.exception;
 
+import jakarta.validation.ConstraintViolation;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.ConstraintViolation;
 import uk.gov.defra.tracesx.common.event.model.Message;
 
 public class MessageValidationException extends RuntimeException {
