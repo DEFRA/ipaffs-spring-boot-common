@@ -1,4 +1,4 @@
-@Library('pipeline-library') _
+@Library('pipeline-library@feature/IMTA-16084-Spring-Boot-Parents-bump') _
 
 javaLibraryPipeline {
    SERVICE_NAME = "spring-boot-common"

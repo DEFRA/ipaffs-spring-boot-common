@@ -1,21 +1,21 @@
 package uk.gov.defra.tracesx.common.health.http;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthParams;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HttpHealthParamsTest {
+@ExtendWith(MockitoExtension.class)
+class HttpHealthParamsTest {
 
   @Test
-  public void willCorrectlyInitialize() {
+  void willCorrectlyInitialize() {
 
     HttpHeaders httpHeaders = new HttpHeaders();
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
