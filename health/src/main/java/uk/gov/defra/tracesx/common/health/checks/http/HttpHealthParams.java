@@ -7,10 +7,10 @@ public class HttpHealthParams {
 
   private final String url;
   private final String name;
-  private final HttpEntity entity;
+  private final HttpEntity<String> entity;
   private final HttpMethod method;
 
-  public HttpHealthParams(String url, String name, HttpEntity entity, HttpMethod method) {
+  public HttpHealthParams(String url, String name, HttpEntity<String> entity, HttpMethod method) {
     this.url = url;
     this.name = name;
     this.entity = entity;
@@ -29,7 +29,7 @@ public class HttpHealthParams {
     return method;
   }
 
-  public HttpEntity getEntity() {
+  public HttpEntity<String> getEntity() {
     return entity;
   }
 }

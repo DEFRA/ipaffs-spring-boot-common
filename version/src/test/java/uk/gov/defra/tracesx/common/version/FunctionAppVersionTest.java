@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.version;
 
-import static com.github.stefanbirkner.systemlambda.SystemLambda.withEnvironmentVariable;
+import static uk.org.webcompere.systemstubs.SystemStubs.withEnvironmentVariable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
