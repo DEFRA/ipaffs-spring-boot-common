@@ -1,13 +1,13 @@
 package uk.gov.defra.tracesx.common.health;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.actuate.health.Health;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
 import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
@@ -16,14 +16,14 @@ import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthCheck;
 import java.util.Arrays;
 import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HealthCheckerTest {
+@ExtendWith(MockitoExtension.class)
+class HealthCheckerTest {
 
   @Mock private JdbcHealthCheck jdbcHealthCheck;
   @Mock private HttpHealthCheck httpHealthCheck;
 
   @Test
-  public void willReportUpWhenAllChecksAreHealthy() {
+  void willReportUpWhenAllChecksAreHealthy() {
 
     when(jdbcHealthCheck.check()).thenReturn(Health.up().build());
     when(httpHealthCheck.check()).thenReturn(Health.up().build());
@@ -35,7 +35,7 @@ public class HealthCheckerTest {
   }
 
   @Test
-  public void willReportDownWhenOneServiceIsDown() {
+  void willReportDownWhenOneServiceIsDown() {
 
     when(jdbcHealthCheck.check()).thenReturn(Health.down().build());
     when(httpHealthCheck.check()).thenReturn(Health.up().build());
