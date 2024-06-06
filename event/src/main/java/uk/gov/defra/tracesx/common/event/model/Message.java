@@ -3,10 +3,10 @@ package uk.gov.defra.tracesx.common.event.model;
 import static uk.gov.defra.tracesx.common.event.util.Constants.STATIC_IP;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

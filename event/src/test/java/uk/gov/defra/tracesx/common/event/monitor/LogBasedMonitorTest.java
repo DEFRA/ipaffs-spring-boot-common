@@ -4,16 +4,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 
-@ExtendWith(MockitoExtension.class)
-class LogBasedMonitorTest {
+@RunWith(MockitoJUnitRunner.class)
+public class LogBasedMonitorTest {
 
   @Mock
   private MessageUtil messageUtil;
@@ -22,7 +22,7 @@ class LogBasedMonitorTest {
   private LogBasedMonitor logBasedMonitor;
 
   @Test
-  void sendMessage_CallsMessageUtil() {
+  public void sendMessage_CallsMessageUtil() {
     Message message = Message.getDefaultMessageBuilder().build();
     when(messageUtil.writeMessage(message)).thenReturn("Message");
 
@@ -32,7 +32,7 @@ class LogBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsSetEventHubEnvironment() {
+  public void sendMessage_CallsSetEventHubEnvironment() {
     Message message = Message.getDefaultMessageBuilder().build();
     logBasedMonitor.sendMessage(message);
 

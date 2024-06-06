@@ -5,7 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-class HealthCheckConfigurationSpringTest {
+public class HealthCheckConfigurationSpringTest {
 
   @Configuration
   @ComponentScan({"uk.gov.defra.tracesx.common.health.checks"})
@@ -56,7 +56,7 @@ class HealthCheckConfigurationSpringTest {
       new ApplicationContextRunner().withUserConfiguration(ComponentScanConfiguration.class);
 
   @Test
-  void testEmptyHealthCheckerCreated() {
+  public void testEmptyHealthCheckerCreated() {
     this.contextRunner.run(
         (context) -> {
           assertThat(context).hasSingleBean(HealthChecker.class);
@@ -66,7 +66,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testDefaultHealthCheckRestTemplateCreated() {
+  public void testDefaultHealthCheckRestTemplateCreated() {
     this.contextRunner.run(
         (context) -> {
           assertThat(context).hasBean("defaultHealthCheckRestTemplate");
@@ -76,7 +76,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testAzureHealthCheckCreated() {
+  public void testAzureHealthCheckCreated() {
     this.contextRunner
         .withPropertyValues(
             "azure.search-service-name",
@@ -96,7 +96,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testAzureHealthCheckNotCreated() {
+  public void testAzureHealthCheckNotCreated() {
     this.contextRunner.run(
         (context) -> {
           assertThat(context).doesNotHaveBean(AzureHealthCheck.class);
@@ -105,7 +105,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testJdbcHealthCheckCreated() {
+  public void testJdbcHealthCheckCreated() {
     this.contextRunner
         .withPropertyValues("spring.datasource.url", "foo:url")
         .withUserConfiguration(ComponentScanConfiguration.class, JdbcTemplateConfiguration.class)
@@ -119,7 +119,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testJdbcHealthCheckNotCreated() {
+  public void testJdbcHealthCheckNotCreated() {
     this.contextRunner.run(
         (context) -> {
           assertThat(context).doesNotHaveBean(JdbcHealthCheck.class);
@@ -128,7 +128,7 @@ class HealthCheckConfigurationSpringTest {
   }
 
   @Test
-  void testCustomHealthCheckBeanRegisteredAndInvoked() {
+  public void testCustomHealthCheckBeanRegisteredAndInvoked() {
     this.contextRunner
         .withUserConfiguration(
             ComponentScanConfiguration.class, CustomHealthCheckerConfiguration.class)

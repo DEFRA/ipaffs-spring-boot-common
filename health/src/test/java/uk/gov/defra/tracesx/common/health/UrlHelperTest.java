@@ -1,17 +1,17 @@
 package uk.gov.defra.tracesx.common.health;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
-@ExtendWith(MockitoExtension.class)
-class UrlHelperTest {
+@RunWith(MockitoJUnitRunner.class)
+public class UrlHelperTest {
 
   @Test
-  void willReturnHealthyWhenCalled() {
+  public void willReturnHealthyWhenCalled() {
 
     String url = buildAzureIndexSearchUrl("service", "index", "version");
 

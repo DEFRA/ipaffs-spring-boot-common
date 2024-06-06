@@ -13,18 +13,18 @@ import com.microsoft.azure.eventhubs.EventHubClient;
 import com.microsoft.azure.eventhubs.EventHubException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.model.Priority;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 
-@ExtendWith(MockitoExtension.class)
-class EventHubBasedMonitorTest {
+@RunWith(MockitoJUnitRunner.class)
+public class EventHubBasedMonitorTest {
 
   private static final String CLOSED = "CLOSED";
   private static final String DUMMY_MESSAGE = "message";
@@ -47,7 +47,7 @@ class EventHubBasedMonitorTest {
   private CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("testCircuitBreaker");
   private Message message = Message.getDefaultMessageBuilder().build();
 
-  @BeforeEach
+  @Before
   public void before() throws JsonProcessingException {
     byte[] payloadBytes = new ObjectMapper().writeValueAsBytes(message);
     when(messageUtil.writeMessageToBytes(any())).thenReturn(payloadBytes);
@@ -55,7 +55,7 @@ class EventHubBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsEventHubClientAndAppInsights() throws EventHubException {
+  public void sendMessage_CallsEventHubClientAndAppInsights() throws EventHubException {
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).writeMessageToBytes(message);
@@ -65,7 +65,7 @@ class EventHubBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsAppInsightsBasedMonitorOnEventHubException()
+  public void sendMessage_CallsAppInsightsBasedMonitorOnEventHubException()
       throws EventHubException {
     doThrow(new EventHubException(true, DUMMY_MESSAGE))
         .when(eventHubClient)
@@ -82,7 +82,7 @@ class EventHubBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_RegistersAFailureInCircuitBreakerOnEventHubException()
+  public void sendMessage_RegistersAFailureInCircuitBreakerOnEventHubException()
       throws EventHubException {
     doThrow(new EventHubException(true, DUMMY_MESSAGE))
         .when(eventHubClient)
@@ -98,7 +98,7 @@ class EventHubBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsAppInsightsBasedMonitorOnNullPointerException()
+  public void sendMessage_CallsAppInsightsBasedMonitorOnNullPointerException()
       throws EventHubException {
     doThrow(new NullPointerException(DUMMY_MESSAGE))
         .when(eventHubClient)
@@ -115,7 +115,7 @@ class EventHubBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsSetEventHubEnvironment() {
+  public void sendMessage_CallsSetEventHubEnvironment() {
     eventHubBasedMonitor.sendMessage(message);
 
     verify(messageUtil).setEventHubEnvironment(message);

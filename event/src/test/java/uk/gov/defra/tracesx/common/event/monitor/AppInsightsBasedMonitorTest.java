@@ -7,11 +7,11 @@ import static org.mockito.Mockito.when;
 import static uk.gov.defra.tracesx.common.event.util.Constants.MONITORING_EVENT_METRIC;
 
 import com.microsoft.applicationinsights.TelemetryClient;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.model.Priority;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
@@ -19,8 +19,8 @@ import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 import java.util.Collections;
 import java.util.Map;
 
-@ExtendWith(MockitoExtension.class)
-class AppInsightsBasedMonitorTest {
+@RunWith(MockitoJUnitRunner.class)
+public class AppInsightsBasedMonitorTest {
 
   @Mock
   private MessageUtil messageUtil;
@@ -35,7 +35,7 @@ class AppInsightsBasedMonitorTest {
   private AppInsightsBasedMonitor appInsightsBasedMonitor;
 
   @Test
-  void sendMessage_CallsTelemetryClient() {
+  public void sendMessage_CallsTelemetryClient() {
     Map<String, String> properties = Collections.singletonMap("data", "Message");
     Message message = Message.getDefaultMessageBuilder().build();
     when(messageUtil.writeMessage(message)).thenReturn("Message");
@@ -48,7 +48,7 @@ class AppInsightsBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsLogBasedMonitorOnException() {
+  public void sendMessage_CallsLogBasedMonitorOnException() {
     Map<String, String> properties = Collections.singletonMap("data", "Message");
     Message message = Message.getDefaultMessageBuilder().build();
     when(messageUtil.writeMessage(message)).thenReturn("Message");
@@ -65,7 +65,7 @@ class AppInsightsBasedMonitorTest {
   }
 
   @Test
-  void sendMessage_CallsSetEventHubEnvironment() {
+  public void sendMessage_CallsSetEventHubEnvironment() {
     Message message = Message.getDefaultMessageBuilder().build();
     when(messageUtil.writeMessage(message)).thenReturn("Message");
 

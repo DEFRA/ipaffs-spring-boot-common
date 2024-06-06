@@ -3,11 +3,10 @@ package uk.gov.defra.tracesx.common.health.tests;
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static uk.gov.defra.tracesx.common.health.tests.RequestHelper.getUrl;
 
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public abstract class AbstractAdminEndpointsTest {
 

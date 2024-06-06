@@ -3,18 +3,18 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common-Event</artifactId>
-    <version>4.0.1</version>
+    <version>3.0.0</version>
     <name>event</name>
 
     <parent>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common</artifactId>
-        <version>4.0.1</version>
+        <version>3.0.0</version>
     </parent>
 
     <scm>
         <connection>${parent.scm.connection}</connection>
-        <tag>4.0.1-8</tag>
+        <tag>3.0.0-117</tag>
     </scm>
 
     <dependencies>
@@ -43,8 +43,8 @@
             <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
@@ -55,8 +55,8 @@
             <artifactId>javax.el-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.el</artifactId>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

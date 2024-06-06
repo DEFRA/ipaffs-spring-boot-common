@@ -4,27 +4,27 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import uk.gov.defra.tracesx.common.event.exception.MessageValidationException;
 import uk.gov.defra.tracesx.common.event.model.Details;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
 
-class MessageValidationTest {
+public class MessageValidationTest {
 
   private static final String MAX_LENGTH_STRING = StringUtils.repeat("a", 81);
   private static final String DEPLOYMENT_ENVIRONMENT = "env";
 
   private MessageUtil messageUtil;
 
-  @BeforeEach
+  @Before
   public void setUp() {
     messageUtil = new MessageUtil(new ObjectMapper(), DEPLOYMENT_ENVIRONMENT);
   }
 
   @Test
-  void writeMessage_Throws_OnUserLength() {
+  public void writeMessage_Throws_OnUserLength() {
     Message message = new Message();
     message.setUser(MAX_LENGTH_STRING);
 
@@ -34,7 +34,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_OnSessionId() {
+  public void writeMessage_Throws_OnSessionId() {
     Message message = new Message();
     message.setSessionId(MAX_LENGTH_STRING);
 
@@ -44,7 +44,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_OnDateTime() {
+  public void writeMessage_Throws_OnDateTime() {
     Message message = new Message();
     message.setDateTime(MAX_LENGTH_STRING);
 
@@ -54,7 +54,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_OnIp() {
+  public void writeMessage_Throws_OnIp() {
     Message message = new Message();
     message.setIp(MAX_LENGTH_STRING);
 
@@ -64,7 +64,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_OnDetails_message() {
+  public void writeMessage_Throws_OnDetails_message() {
     Message message = Message.getDefaultMessageBuilder()
         .details(Details.builder()
             .message(MAX_LENGTH_STRING)
@@ -77,7 +77,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_OnDetails_additionalInfo() {
+  public void writeMessage_Throws_OnDetails_additionalInfo() {
     Message message = Message.getDefaultMessageBuilder()
         .details(Details.builder()
             .additionalInfo(MAX_LENGTH_STRING)
@@ -90,7 +90,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_WithMultipleViolations() {
+  public void writeMessage_Throws_WithMultipleViolations() {
     Message message = Message.getDefaultMessageBuilder()
         .user(MAX_LENGTH_STRING)
         .details(Details.builder()
@@ -105,7 +105,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeMessage_Throws_NotNullViolations() {
+  public void writeMessage_Throws_NotNullViolations() {
     Message message = new Message();
 
     assertThatThrownBy(() -> messageUtil.writeMessage(message))
@@ -124,7 +124,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_OnUserLength() {
+  public void writeBytes_Throws_OnUserLength() {
     Message message = new Message();
     message.setUser(MAX_LENGTH_STRING);
 
@@ -134,7 +134,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_OnSessionId() {
+  public void writeBytes_Throws_OnSessionId() {
     Message message = new Message();
     message.setSessionId(MAX_LENGTH_STRING);
 
@@ -144,7 +144,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_OnDateTime() {
+  public void writeBytes_Throws_OnDateTime() {
     Message message = new Message();
     message.setDateTime(MAX_LENGTH_STRING);
 
@@ -154,7 +154,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_OnIp() {
+  public void writeBytes_Throws_OnIp() {
     Message message = new Message();
     message.setIp(MAX_LENGTH_STRING);
 
@@ -164,7 +164,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeByes_Throws_OnDetails_message() {
+  public void writeByes_Throws_OnDetails_message() {
     Message message = Message.getDefaultMessageBuilder()
         .details(Details.builder()
             .message(MAX_LENGTH_STRING)
@@ -177,7 +177,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_OnDetails_additionalInfo() {
+  public void writeBytes_Throws_OnDetails_additionalInfo() {
     Message message = Message.getDefaultMessageBuilder()
         .details(Details.builder()
             .additionalInfo(MAX_LENGTH_STRING)
@@ -190,7 +190,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_WithMultipleViolations() {
+  public void writeBytes_Throws_WithMultipleViolations() {
     Message message = Message.getDefaultMessageBuilder()
         .user(MAX_LENGTH_STRING)
         .details(Details.builder()
@@ -205,7 +205,7 @@ class MessageValidationTest {
   }
 
   @Test
-  void writeBytes_Throws_NotNullViolations() {
+  public void writeBytes_Throws_NotNullViolations() {
     Message message = new Message();
 
     assertThatThrownBy(() -> messageUtil.writeMessageToBytes(message))

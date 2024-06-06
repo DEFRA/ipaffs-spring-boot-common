@@ -6,7 +6,7 @@ import static uk.gov.defra.tracesx.common.health.tests.RequestHelper.getUrl;
 
 import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public abstract class AbstractRootEndpointTest {
 

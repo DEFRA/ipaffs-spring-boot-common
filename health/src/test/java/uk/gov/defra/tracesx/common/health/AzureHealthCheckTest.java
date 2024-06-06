@@ -1,16 +1,16 @@
 package uk.gov.defra.tracesx.common.health;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static uk.gov.defra.tracesx.common.health.UrlHelper.buildAzureIndexSearchUrl;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
 
-@ExtendWith(MockitoExtension.class)
-class AzureHealthCheckTest {
+@RunWith(MockitoJUnitRunner.class)
+public class AzureHealthCheckTest {
 
   private String serviceName = "imports-azure-search-shared";
   private String indexName = "1-economic-operators-index";
@@ -30,13 +30,13 @@ class AzureHealthCheckTest {
 
   @Mock private RestTemplate restTemplate;
 
-  @BeforeEach
+  @Before
   public void setUp() {
     url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
   }
 
   @Test
-  void willReturnHealthyWhenAzureQueryOk() {
+  public void willReturnHealthyWhenAzureQueryOk() {
 
     when(restTemplate.exchange(
             eq(url), Mockito.eq(HttpMethod.POST), Mockito.any(), Mockito.<Class<String>>any()))
@@ -48,7 +48,7 @@ class AzureHealthCheckTest {
   }
 
   @Test
-  void willReturnUnHealthyWhenAzureQueryNotOk() {
+  public void willReturnUnHealthyWhenAzureQueryNotOk() {
 
     url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
     when(restTemplate.exchange(
@@ -61,7 +61,7 @@ class AzureHealthCheckTest {
   }
 
   @Test
-  void willReturnUnHealthyWhenClientThrowsException() {
+  public void willReturnUnHealthyWhenClientThrowsException() {
 
     url = buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
     when(restTemplate.exchange(

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Health-Tests</artifactId>
-  <version>4.0.1</version>
+  <version>3.0.0</version>
   <name>health-tests</name>
   <description>An integration test library for testing correct deployment of the Shared Spring Boot health
     Configuration
@@ -12,12 +12,12 @@
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common</artifactId>
-    <version>4.0.1</version>
+    <version>3.0.0</version>
   </parent>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>4.0.1-8</tag>
+    <tag>3.0.0-117</tag>
   </scm>
 
   <dependencies>
@@ -26,12 +26,8 @@
       <artifactId>httpcore</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
