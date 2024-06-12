@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common</artifactId>
-  <version>3.0.0</version>
+  <version>4.0.1</version>
   <packaging>pom</packaging>
   <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
   <name>common-parent</name>
@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>2.6.2</version>
+    <version>3.2.1</version>
   </parent>
 
   <properties>
@@ -36,9 +36,9 @@
     <lucene.version>8.2.0</lucene.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
-    <org.glassfish.web.javax.el.version>2.2.6</org.glassfish.web.javax.el.version>
+    <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
     <owasp.version>8.2.1</owasp.version>
-    <rest-assured.version>3.3.0</rest-assured.version>
+    <rest-assured.version>5.3.2</rest-assured.version>
     <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
     <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
     <maven-remote-resources-plugin.version>3.0.0</maven-remote-resources-plugin.version>
@@ -47,7 +47,7 @@
 
   <scm>
     <connection>scm:git:https://giteux.REMOVED/imports/spring-boot-common.git</connection>
-    <tag>3.0.0-117</tag>
+    <tag>4.0.1-8</tag>
   </scm>
 
   <modules>
@@ -116,9 +116,9 @@
         <version>${javax.el.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.glassfish.web</groupId>
-        <artifactId>javax.el</artifactId>
-        <version>${org.glassfish.web.javax.el.version}</version>
+        <groupId>org.glassfish</groupId>
+        <artifactId>jakarta.el</artifactId>
+        <version>${org.glassfish.jakarta.el.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.resilience4j</groupId>
