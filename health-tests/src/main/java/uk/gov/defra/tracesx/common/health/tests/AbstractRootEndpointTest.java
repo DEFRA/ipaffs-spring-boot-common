@@ -2,10 +2,11 @@ package uk.gov.defra.tracesx.common.health.tests;
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 import static uk.gov.defra.tracesx.common.health.tests.RequestHelper.getUrl;
 
 import io.restassured.http.ContentType;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 public abstract class AbstractRootEndpointTest {
@@ -19,6 +20,6 @@ public abstract class AbstractRootEndpointTest {
         .then()
         .assertThat()
         .statusCode(SC_OK)
-        .body(Matchers.isEmptyString());
+        .body(is(emptyString()));
   }
 }

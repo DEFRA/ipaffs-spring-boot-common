@@ -2,6 +2,7 @@ package uk.gov.defra.tracesx.common.event.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -29,7 +30,7 @@ public class MessageUtil {
   public String writeMessage(Message message) {
     try {
       validate(message);
-      this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE);
+      this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CASE);
       return objectMapper.writeValueAsString(message);
     } catch (JsonProcessingException exception) {
       throw new ProtectiveMonitorJsonProcessingException(
@@ -40,7 +41,7 @@ public class MessageUtil {
   public byte[] writeMessageToBytes(Message message) {
     try {
       validate(message);
-      this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.LOWER_CASE);
+      this.objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CASE);
       return objectMapper.writeValueAsBytes(message);
     } catch (JsonProcessingException exception) {
       throw new ProtectiveMonitorJsonProcessingException(

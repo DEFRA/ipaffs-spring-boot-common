@@ -21,7 +21,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <applicationinsights-core.version>2.6.2</applicationinsights-core.version>
+    <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>

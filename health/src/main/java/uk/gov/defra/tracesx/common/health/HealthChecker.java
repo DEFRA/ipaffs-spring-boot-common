@@ -2,7 +2,6 @@ package uk.gov.defra.tracesx.common.health;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
@@ -12,7 +11,7 @@ import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
 
 public class HealthChecker implements HealthIndicator {
 
-  private List<CheckHealth> checks;
+  private final List<CheckHealth> checks;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HealthChecker.class);
 
@@ -22,8 +21,7 @@ public class HealthChecker implements HealthIndicator {
 
   @Override
   public Health health() {
-    List<CheckHealth> failed =
-        checks.parallelStream().filter(failCheck()).collect(Collectors.toList());
+    List<CheckHealth> failed = checks.parallelStream().filter(failCheck()).toList();
     return failed.isEmpty() ? Health.up().build() : Health.down().build();
   }
 
