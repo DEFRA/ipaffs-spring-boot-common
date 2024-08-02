@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
   <packaging>pom</packaging>
   <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
   <name>common-parent</name>
@@ -21,7 +21,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <applicationinsights-core.version>2.6.2</applicationinsights-core.version>
+    <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
@@ -47,7 +47,7 @@
 
   <scm>
     <connection>scm:git:https://giteux.REMOVED/imports/spring-boot-common.git</connection>
-    <tag>4.0.2-119</tag>
+    <tag>4.0.3-121</tag>
   </scm>
 
   <modules>

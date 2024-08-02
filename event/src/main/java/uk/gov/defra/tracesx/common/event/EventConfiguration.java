@@ -2,7 +2,6 @@ package uk.gov.defra.tracesx.common.event;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.applicationinsights.TelemetryClient;
-import com.microsoft.applicationinsights.TelemetryConfiguration;
 import com.microsoft.azure.eventhubs.ConnectionStringBuilder;
 import com.microsoft.azure.eventhubs.EventHubClient;
 import com.microsoft.azure.eventhubs.EventHubException;
@@ -91,8 +90,7 @@ public class EventConfiguration {
 
   @Bean
   public TelemetryClient createTelemetryClient() {
-    TelemetryConfiguration configuration = TelemetryConfiguration.getActive();
-    return new TelemetryClient(configuration);
+    return new TelemetryClient();
   }
 
   @Bean
@@ -144,20 +142,16 @@ public class EventConfiguration {
   private LogBasedMonitor getLogBasedMonitor() {
     if (logBasedMonitor == null) {
       logBasedMonitor = new LogBasedMonitor(createMessageUtil());
-      return logBasedMonitor;
-    } else {
-      return logBasedMonitor;
     }
+    return logBasedMonitor;
   }
 
   private AppInsightsBasedMonitor getAppInsightsBasedMonitor() {
     if (appInsightsBasedMonitor == null) {
-      appInsightsBasedMonitor =
-          new AppInsightsBasedMonitor(
-              getLogBasedMonitor(), createTelemetryClient(), createMessageUtil());
-      return appInsightsBasedMonitor;
-    } else {
-      return appInsightsBasedMonitor;
+      appInsightsBasedMonitor = new AppInsightsBasedMonitor(
+          getLogBasedMonitor(), createTelemetryClient(), createMessageUtil()
+      );
     }
+    return appInsightsBasedMonitor;
   }
 }
