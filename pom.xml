@@ -37,7 +37,6 @@
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
-    <owasp.version>8.2.1</owasp.version>
     <rest-assured.version>5.3.2</rest-assured.version>
     <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
     <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
