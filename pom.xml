@@ -55,6 +55,7 @@
     <module>health</module>
     <module>health-tests</module>
     <module>logging</module>
+    <module>parent</module>
     <module>version</module>
   </modules>
 
@@ -325,6 +326,7 @@
       </plugin>
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>jenkins</id>
