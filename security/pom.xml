@@ -2,17 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
-  <artifactId>TracesX-SpringBoot-CommonSecurity-Config</artifactId>
-  <version>4.0.9-SNAPSHOT</version>
-  <name>common-security-config</name>
+  <artifactId>TracesX-SpringBoot-Common-Security</artifactId>
+  <version>4.0.5-SNAPSHOT</version>
+  <name>security</name>
   <description>Shared Spring Boot Web Security configuration</description>
 
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
-    <artifactId>TracesX-SpringBoot-CommonSecurity</artifactId>
-    <version>4.0.9-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
+    <artifactId>TracesX-SpringBoot-Common</artifactId>
+    <version>4.0.5-SNAPSHOT</version>
   </parent>
+
+  <properties>
+    <jjwt.version>0.10.5</jjwt.version>
+  </properties>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
@@ -61,6 +64,7 @@
     <dependency>
       <groupId>com.auth0</groupId>
       <artifactId>jwks-rsa</artifactId>
+      <version>0.13.0</version>
     </dependency>
     <!-- TEST Dependencies -->
     <dependency>
@@ -107,16 +111,19 @@
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-api</artifactId>
+      <version>${jjwt.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>io.jsonwebtoken</groupId>
       <artifactId>jjwt-jackson</artifactId>
+      <version>${jjwt.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>uk.gov.defra.tracesx</groupId>
-	<artifactId>TracesX-SpringBoot-CommonSecurity-Tests</artifactId>
-	<version>4.0.9-SNAPSHOT</version>
-	<name>common-security-tests</name>
-	<description>An integration test library for testing correct deployment of the Shared Spring Boot Web Security Configuration</description>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>uk.gov.defra.tracesx</groupId>
+  <artifactId>TracesX-SpringBoot-Common-Security-Tests</artifactId>
+  <version>4.0.5-SNAPSHOT</version>
+  <name>security-tests</name>
+  <description>An integration test library for testing correct deployment of the Shared Spring Boot Web Security Configuration</description>
 
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
-    <artifactId>TracesX-SpringBoot-CommonSecurity</artifactId>
-    <version>4.0.9-SNAPSHOT</version>
+    <artifactId>TracesX-SpringBoot-Common</artifactId>
+    <version>4.0.5-SNAPSHOT</version>
   </parent>
 
   <distributionManagement>
@@ -26,7 +26,7 @@
     <tag>HEAD</tag>
   </scm>
 
-	<dependencies>
+  <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -59,7 +59,7 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
     </dependency>
-	</dependencies>
+  </dependencies>
 
   <build>
     <plugins>
