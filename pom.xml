@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>3.2.1</version>
+    <version>3.4.2</version>
   </parent>
 
   <properties>
@@ -25,6 +25,7 @@
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
+    <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
     <maven.help.plugin.version>3.4.0</maven.help.plugin.version>
     <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
@@ -55,6 +56,9 @@
     <module>health</module>
     <module>health-tests</module>
     <module>logging</module>
+    <module>parent</module>
+    <module>security</module>
+    <module>security-tests</module>
     <module>version</module>
   </modules>
 
@@ -83,11 +87,11 @@
         <artifactId>applicationinsights-core</artifactId>
         <version>${applicationinsights-core.version}</version>
       </dependency>
-        <dependency>
-          <groupId>com.nimbusds</groupId>
-          <artifactId>nimbus-jose-jwt</artifactId>
-          <version>${nimbus-jose-jwt.version}</version>
-        </dependency>
+      <dependency>
+        <groupId>com.nimbusds</groupId>
+        <artifactId>nimbus-jose-jwt</artifactId>
+        <version>${nimbus-jose-jwt.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>azure-eventhubs</artifactId>
@@ -154,161 +158,169 @@
 
   <build>
     <pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>${maven.deploy.plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-help-plugin</artifactId>
-        <version>${maven.help.plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>${maven.jar.plugin.version}</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-        <version>2.5.3</version>
-        <configuration>
-          <autoVersionSubmodules>true</autoVersionSubmodules>
-          <tagNameFormat>@{project.version}-${env.BUILD_NUMBER}</tagNameFormat>
-          <releaseProfiles>release</releaseProfiles>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven.checkstyle.version}</version>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <configLocation>${project.build.directory}/maven-shared-archive-resources/google_checks_ipaffs.xml</configLocation>
-          <logViolationsToConsole>true</logViolationsToConsole>
-          <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
-          <violationSeverity>warning</violationSeverity>
-          <failsOnError>true</failsOnError>
-          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
-          <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-        <version>${maven.versions.plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok-maven-plugin</artifactId>
-        <version>${lombok-maven-plugin.version}</version>
-        <configuration>
-          <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-          <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
-          <addOutputDirectory>false</addOutputDirectory>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>delombok</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${jacoco.maven.plugin.version}</version>
-        <configuration>
-          <excludes>
-            <exclude>**/traceswsns/**/*</exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <id>default-prepare-agent</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>default-check</id>
-            <goals>
-              <goal>check</goal>
-            </goals>
-            <configuration>
-              <rules>
-                <rule implementation="org.jacoco.maven.RuleConfiguration">
-                  <element>BUNDLE</element>
-                  <limits>
-                    <limit implementation="org.jacoco.report.check.Limit">
-                      <counter>LINE</counter>
-                      <value>COVEREDRATIO</value>
-                    </limit>
-                  </limits>
-                </rule>
-              </rules>
-            </configuration>
-          </execution>
-          <execution>
-            <id>report-agent</id>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-remote-resources-plugin</artifactId>
-        <version>${maven-remote-resources-plugin.version}</version>
-        <configuration>
-          <resourceBundles>
-            <resourceBundle>uk.gov.defra.tracesx:shared-resources:${shared-resources.version}</resourceBundle>
-          </resourceBundles>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>process</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.rudikershaw.gitbuildhook</groupId>
-        <artifactId>git-build-hook-maven-plugin</artifactId>
-        <version>${git-build-hook-maven-plugin.version}</version>
-        <configuration>
-          <gitConfig>
-            <core.hooksPath>hooks</core.hooksPath>
-          </gitConfig>
-        </configuration>
-        <executions>
-          <execution>
-            <id>configure-git-hooks</id>
-            <goals>
-              <goal>configure</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <parameters>true</parameters>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven.deploy.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>${maven.help.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven.jar.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <autoVersionSubmodules>true</autoVersionSubmodules>
+            <tagNameFormat>@{project.version}-${env.BUILD_NUMBER}</tagNameFormat>
+            <releaseProfiles>release</releaseProfiles>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven.checkstyle.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>${checkstyle.version}</version>
+            </dependency>
+          </dependencies>
+          <configuration>
+            <configLocation>${project.build.directory}/maven-shared-archive-resources/google_checks_ipaffs.xml</configLocation>
+            <logViolationsToConsole>true</logViolationsToConsole>
+            <outputFile>${project.build.directory}/checkstyle-result.xml</outputFile>
+            <violationSeverity>warning</violationSeverity>
+            <failsOnError>true</failsOnError>
+            <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+            <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>${maven.versions.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok-maven-plugin</artifactId>
+          <version>${lombok-maven-plugin.version}</version>
+          <configuration>
+            <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+            <outputDirectory>${lombok-maven-plugin.outputDirectory}</outputDirectory>
+            <addOutputDirectory>false</addOutputDirectory>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>delombok</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco.maven.plugin.version}</version>
+          <configuration>
+            <excludes>
+              <exclude>**/traceswsns/**/*</exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <id>default-prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>default-check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <rule implementation="org.jacoco.maven.RuleConfiguration">
+                    <element>BUNDLE</element>
+                    <limits>
+                      <limit implementation="org.jacoco.report.check.Limit">
+                        <counter>LINE</counter>
+                        <value>COVEREDRATIO</value>
+                      </limit>
+                    </limits>
+                  </rule>
+                </rules>
+              </configuration>
+            </execution>
+            <execution>
+              <id>report-agent</id>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-remote-resources-plugin</artifactId>
+          <version>${maven-remote-resources-plugin.version}</version>
+          <configuration>
+            <resourceBundles>
+              <resourceBundle>uk.gov.defra.tracesx:shared-resources:${shared-resources.version}</resourceBundle>
+            </resourceBundles>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>process</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>com.rudikershaw.gitbuildhook</groupId>
+          <artifactId>git-build-hook-maven-plugin</artifactId>
+          <version>${git-build-hook-maven-plugin.version}</version>
+          <configuration>
+            <gitConfig>
+              <core.hooksPath>hooks</core.hooksPath>
+            </gitConfig>
+          </configuration>
+          <executions>
+            <execution>
+              <id>configure-git-hooks</id>
+              <goals>
+                <goal>configure</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
     </pluginManagement>
     <plugins>
       <plugin>
@@ -325,6 +337,7 @@
       </plugin>
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>jenkins</id>
