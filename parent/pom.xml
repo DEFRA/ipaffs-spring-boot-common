@@ -1,7 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
-  <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Parent</artifactId>
   <version>4.0.7-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -10,9 +8,9 @@
   <url>http://maven.apache.org</url>
 
   <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.4.2</version>
+    <groupId>uk.gov.defra.tracesx</groupId>
+    <artifactId>TracesX-SpringBoot-Common</artifactId>
+    <version>4.0.7-SNAPSHOT</version>
   </parent>
 
   <distributionManagement>
@@ -35,16 +33,7 @@
 
   <properties>
     <project.scm.id>gitlab</project.scm.id>
-
-    <!--
-    this version is managed/kept-aligned with the modules pom.version by the maven release plugin
-
-    ie it will get bumped/have -SNAPSHOT added/removed when the main build runs on the CI server
-    -->
-    <tracesx.springboot.common.version>4.0.7-SNAPSHOT</tracesx.springboot.common.version>
-
     <java.version>17</java.version>
-
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
     <azure.version>2.3.3</azure.version>
@@ -81,45 +70,54 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Azure</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Event</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Health-Tests</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Logging</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Security</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Security-Tests</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
       <dependency>
         <groupId>uk.gov.defra.tracesx</groupId>
         <artifactId>TracesX-SpringBoot-Common-Version</artifactId>
-        <version>${tracesx.springboot.common.version}</version>
+        <version>${project.parent.version}</version>
       </dependency>
+
       <dependency>
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils</artifactId>
@@ -171,11 +169,6 @@
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
         <version>${equalsverifier.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>${h2.version}</version>
       </dependency>
       <dependency>
         <groupId>org.hibernate.orm</groupId>
@@ -398,6 +391,7 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
           <executions>
             <execution>
               <goals>

@@ -7,12 +7,6 @@
   <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
   <name>common-parent</name>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-dependencies</artifactId>
-    <version>3.4.2</version>
-  </parent>
-
   <properties>
     <project.scm.id>gitlab</project.scm.id>
 
@@ -21,6 +15,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+    <spring-boot.version>3.4.2</spring-boot.version>
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
     <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
@@ -77,6 +72,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-core</artifactId>
@@ -181,6 +183,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>${maven.jar.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.11.2</version>
         </plugin>
         <plugin>
           <artifactId>maven-release-plugin</artifactId>
