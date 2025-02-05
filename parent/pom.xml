@@ -36,6 +36,18 @@
   <properties>
     <project.scm.id>gitlab</project.scm.id>
 
+    <!--
+    When using this POM as parent in a child application
+    - ${project.version} resolves to the version of the child app (as per link below)
+    - ${project.parent.version} resolves to the version of _this_ module (which matches the other modules in this repo)
+
+    https://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Project_Interpolation_and_Variables
+
+    Using ${project.parent.version} here means the <dependencyManagement> block of this POM (when used as a parent)
+    declares the version of the TracesX-SpringBoot-Common libraries at the same version as _this_ module
+    -->
+    <tracesx.springboot.common.version>${project.parent.version}</tracesx.springboot.common.version>
+
     <java.version>17</java.version>
 
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
@@ -73,6 +85,46 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Azure</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Event</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Health-Tests</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Logging</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Security</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Security-Tests</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>TracesX-SpringBoot-Common-Version</artifactId>
+        <version>${tracesx.springboot.common.version}</version>
+      </dependency>
       <dependency>
         <groupId>commons-beanutils</groupId>
         <artifactId>commons-beanutils</artifactId>
