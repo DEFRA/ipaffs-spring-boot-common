@@ -37,16 +37,11 @@
     <project.scm.id>gitlab</project.scm.id>
 
     <!--
-    When using this POM as parent in a child application
-    - ${project.version} resolves to the version of the child app (as per link below)
-    - ${project.parent.version} resolves to the version of _this_ module (which matches the other modules in this repo)
+    this version is managed/kept-aligned with the modules pom.version by the maven release plugin
 
-    https://maven.apache.org/guides/introduction/introduction-to-the-pom.html#Project_Interpolation_and_Variables
-
-    Using ${project.parent.version} here means the <dependencyManagement> block of this POM (when used as a parent)
-    declares the version of the TracesX-SpringBoot-Common libraries at the same version as _this_ module
+    ie it will get bumped/have -SNAPSHOT added/removed when the main build runs on the CI server
     -->
-    <tracesx.springboot.common.version>${project.parent.version}</tracesx.springboot.common.version>
+    <tracesx.springboot.common.version>4.0.6-SNAPSHOT</tracesx.springboot.common.version>
 
     <java.version>17</java.version>
 
