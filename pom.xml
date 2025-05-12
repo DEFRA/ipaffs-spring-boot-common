@@ -23,7 +23,7 @@
 
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
-    <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
+    <nimbus-jose-jwt.version>10.2</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
