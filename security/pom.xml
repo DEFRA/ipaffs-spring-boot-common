@@ -59,6 +59,7 @@
     <dependency>
       <groupId>com.nimbusds</groupId>
       <artifactId>nimbus-jose-jwt</artifactId>
+      <version>${nimbus-jose-jwt.version}</version>
     </dependency>
     <!-- used to fetch public signing keys from jwks urls -->
     <dependency>
