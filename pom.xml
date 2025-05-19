@@ -23,7 +23,11 @@
 
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure-eventhubs.version>3.3.0</azure-eventhubs.version>
-    <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
+    <adal4j.version>1.6.7</adal4j.version>
+    <azure-client-runtime.verson>1.7.14</azure-client-runtime.verson>
+    <azure-client-authentication.version>1.7.14</azure-client-authentication.version>
+    <logging-interceptor.version>4.12.0</logging-interceptor.version>
+    <nimbus-jose-jwt.version>10.3</nimbus-jose-jwt.version>
     <maven.checkstyle.version>3.2.1</maven.checkstyle.version>
     <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
     <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
@@ -35,6 +39,7 @@
     <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
     <javax.el.version>3.0.0</javax.el.version>
     <lucene.version>8.2.0</lucene.version>
+    <guava.version>33.4.8-jre</guava.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
@@ -105,13 +110,50 @@
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
           </exclusion>
+          <exclusion>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>adal4j</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-client-runtime</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>logging-interceptor</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-client-authentication</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
       <!-- Exclude guava from everywhere and add an OWASP friendly version of 30 + -->
       <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>adal4j</artifactId>
+        <version>${adal4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-client-runtime</artifactId>
+        <version>${azure-client-runtime.verson}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.okhttp3</groupId>
+        <artifactId>logging-interceptor</artifactId>
+        <version>${logging-interceptor.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.microsoft.azure</groupId>
+        <artifactId>azure-client-authentication</artifactId>
+        <version>${azure-client-authentication.version}</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>30.1-jre</version>
+        <version>${guava.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.el</groupId>

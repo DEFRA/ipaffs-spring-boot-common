@@ -48,13 +48,14 @@
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
     <azure.version>2.3.3</azure.version>
-    <azureidentity.version>1.11.2</azureidentity.version>
+    <azureidentity.version>1.16.1</azureidentity.version>
     <checkstyle.version>10.12.2</checkstyle.version>
     <commons.beanutils.version>1.9.4</commons.beanutils.version>
     <equalsverifier.version>3.15.1</equalsverifier.version>
     <everit-json-schema.version>1.14.4</everit-json-schema.version>
     <git-build-hook-maven-plugin.version>3.4.1</git-build-hook-maven-plugin.version>
-    <guava.version>32.1.2-jre</guava.version>
+    <guava.version>33.4.8-jre</guava.version>
+    <nimbus-jose-jwt.version>10.3</nimbus-jose-jwt.version>
     <hibernate.version>6.4.1.Final</hibernate.version>
     <io.micrometer.micrometer-core.version>1.11.3</io.micrometer.micrometer-core.version>
     <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
@@ -70,7 +71,7 @@
     <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     <maven-remote-resources-plugin.version>3.1.0</maven-remote-resources-plugin.version>
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
-    <mssql.jdbc.version>11.2.0.jre17</mssql.jdbc.version>
+    <mssql.jdbc.version>12.10.0.jre11</mssql.jdbc.version>
     <neovisionaries.version>1.29</neovisionaries.version>
     <org.owasp.encoder.version>1.2.3</org.owasp.encoder.version>
     <shared-resources.version>1.0.1</shared-resources.version>
@@ -146,6 +147,17 @@
         <groupId>com.azure</groupId>
         <artifactId>azure-identity</artifactId>
         <version>${azureidentity.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.nimbusds</groupId>
+        <artifactId>nimbus-jose-jwt</artifactId>
+        <version>${nimbus-jose-jwt.version}</version>
       </dependency>
       <dependency>
         <groupId>com.github.fge</groupId>
@@ -251,10 +263,6 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.azure</groupId>
-      <artifactId>azure-identity</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
@@ -289,12 +297,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.vaadin.external.google</groupId>
-          <artifactId>android-json</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
