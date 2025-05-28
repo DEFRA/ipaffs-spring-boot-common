@@ -48,7 +48,7 @@
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
     <azure.version>2.3.3</azure.version>
-    <azureidentity.version>1.11.2</azureidentity.version>
+    <azureidentity.version>1.16.1</azureidentity.version>
     <checkstyle.version>10.12.2</checkstyle.version>
     <commons.beanutils.version>1.9.4</commons.beanutils.version>
     <equalsverifier.version>3.15.1</equalsverifier.version>
@@ -147,12 +147,6 @@
         <groupId>com.azure</groupId>
         <artifactId>azure-identity</artifactId>
         <version>${azureidentity.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-          </exclusion>
-        </exclusions>
       </dependency>
       <dependency>
         <groupId>com.nimbusds</groupId>
