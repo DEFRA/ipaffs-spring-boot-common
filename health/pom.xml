@@ -3,18 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Health</artifactId>
-  <version>4.0.11</version>
+  <version>4.0.12-SNAPSHOT</version>
   <name>health</name>
 
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common</artifactId>
-    <version>4.0.11</version>
+    <version>4.0.12-SNAPSHOT</version>
   </parent>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>4.0.11-140</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
