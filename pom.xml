@@ -39,7 +39,6 @@
     <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
     <javax.el.version>3.0.0</javax.el.version>
     <lucene.version>8.2.0</lucene.version>
-    <guava.version>33.4.8-jre</guava.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
@@ -128,7 +127,6 @@
           </exclusion>
         </exclusions>
       </dependency>
-      <!-- Exclude guava from everywhere and add an OWASP friendly version of 30 + -->
       <dependency>
         <groupId>com.microsoft.azure</groupId>
         <artifactId>adal4j</artifactId>
@@ -150,10 +148,12 @@
         <version>${azure-client-authentication.version}</version>
         <scope>compile</scope>
       </dependency>
+
+      <!-- Exclude guava from everywhere and add an OWASP friendly version of 30 + -->
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>${guava.version}</version>
+        <version>33.4.8-jre</version>
       </dependency>
       <dependency>
         <groupId>javax.el</groupId>
