@@ -3,7 +3,7 @@
 
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Parent</artifactId>
-  <version>4.0.13-SNAPSHOT</version>
+  <version>4.0.13</version>
   <packaging>pom</packaging>
 
   <name>parent</name>
@@ -30,7 +30,7 @@
 
   <scm>
     <connection>scm:git:https://giteux.azure.defra.cloud/imports/spring-boot-common.git</connection>
-    <tag>HEAD</tag>
+    <tag>4.0.13-144</tag>
   </scm>
 
   <properties>
@@ -41,7 +41,7 @@
 
     ie it will get bumped/have -SNAPSHOT added/removed when the main build runs on the CI server
     -->
-    <tracesx.springboot.common.version>4.0.13-SNAPSHOT</tracesx.springboot.common.version>
+    <tracesx.springboot.common.version>4.0.13</tracesx.springboot.common.version>
 
     <java.version>17</java.version>
 
