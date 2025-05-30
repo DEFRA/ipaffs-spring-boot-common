@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -36,7 +35,6 @@ public class HealthCheckConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  @ConditionalOnBean(JdbcTemplate.class)
   @ConditionalOnProperty(name = "spring.datasource.url")
   public JdbcHealthCheck jdbcHealthCheck(final JdbcTemplate jdbcTemplate) {
     return new JdbcHealthCheck(jdbcTemplate);

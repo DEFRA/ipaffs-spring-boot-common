@@ -5,6 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
@@ -18,10 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
 import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 class HealthCheckConfigurationSpringTest {
 
