@@ -6,32 +6,48 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
+import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
+import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
 
-@Configuration
+@AutoConfiguration
 public class HealthCheckConfiguration {
+  @Bean
+  @ConditionalOnMissingBean
+  @ConditionalOnProperty("azure.index-name")
+  public AzureHealthCheck azureHealthCheck(
+      final RestTemplate defaultHealthCheckRestTemplate,
+      @Value("${azure.search-service-name}") String serviceName,
+      @Value("${azure.index-name}") String indexName,
+      @Value("${azure.query-api-key}") String apiKey,
+      @Value("${azure.api-version}") String apiVersion) {
 
-  private final Integer connectTimeout;
-  private final Integer readTimeout;
+    final String url = UrlHelper.buildAzureIndexSearchUrl(serviceName, indexName, apiVersion);
+    return new AzureHealthCheck(defaultHealthCheckRestTemplate, url, apiKey);
+  }
 
-  public HealthCheckConfiguration(
-      @Value("${management.health.custom.http.connectTimeout:1000}") Integer connectTimeout,
-      @Value("${management.health.custom.http.readTimeout:1000}") Integer readTimeout) {
-
-    this.connectTimeout = connectTimeout;
-    this.readTimeout = readTimeout;
+  @Bean
+  @ConditionalOnMissingBean
+  @ConditionalOnProperty(name = "spring.datasource.url")
+  public JdbcHealthCheck jdbcHealthCheck(final JdbcTemplate jdbcTemplate) {
+    return new JdbcHealthCheck(jdbcTemplate);
   }
 
   @Bean
   @Qualifier("defaultHealthCheckRestTemplate")
-  public RestTemplate defaultHealthCheckRestTemplate() {
+  public RestTemplate defaultHealthCheckRestTemplate(
+      @Value("${management.health.custom.http.connectTimeout:1000}") Integer connectTimeout,
+      @Value("${management.health.custom.http.readTimeout:1000}") Integer readTimeout) {
     return new RestTemplateBuilder()
-        .setConnectTimeout(Duration.ofSeconds(connectTimeout))
-        .setReadTimeout(Duration.ofSeconds(readTimeout))
+        .connectTimeout(Duration.ofSeconds(connectTimeout))
+        .readTimeout(Duration.ofSeconds(readTimeout))
         .build();
   }
 

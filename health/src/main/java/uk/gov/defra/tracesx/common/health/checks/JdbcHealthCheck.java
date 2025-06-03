@@ -4,21 +4,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.stereotype.Component;
 
-@Component
-@ConditionalOnProperty(name = "spring.datasource.url")
 public class JdbcHealthCheck implements CheckHealth {
 
-  private JdbcTemplate jdbcTemplate;
-
   private static final Logger LOGGER = LoggerFactory.getLogger(JdbcHealthCheck.class);
+  private final JdbcTemplate jdbcTemplate;
 
-  public JdbcHealthCheck(JdbcTemplate jdbcTemplate) {
+  public JdbcHealthCheck(final JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 
