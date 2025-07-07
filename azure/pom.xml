@@ -3,18 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>TracesX-SpringBoot-Common-Azure</artifactId>
-  <version>4.0.15</version>
+  <version>4.0.16-SNAPSHOT</version>
   <name>azure</name>
 
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>TracesX-SpringBoot-Common</artifactId>
-    <version>4.0.15</version>
+    <version>4.0.16-SNAPSHOT</version>
   </parent>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>4.0.15-149</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
