@@ -1,8 +1,0 @@
-@Library('pipeline-library') _
-
-githubMigrationPipeline {
-    GITHUB_REPO = 'DEFRA/ipaffs-spring-boot-common'
-    GITLAB_PROJECT = 'imports/spring-boot-common'
-    MIGRATE_PULL_REQUEST = false
-    LOG_LEVEL = 'DEBUG'
-}
