@@ -14,7 +14,7 @@
   </parent>
 
   <properties>
-    <project.scm.id>gitlab</project.scm.id>
+    <project.scm.id>github</project.scm.id>
 
     <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -50,7 +50,7 @@
   </properties>
 
   <scm>
-    <connection>scm:git:https://giteux.azure.defra.cloud/imports/spring-boot-common.git</connection>
+    <connection>scm:git:https://github.com/DEFRA/ipaffs-spring-boot-common.git</connection>
     <tag>HEAD</tag>
   </scm>
 
