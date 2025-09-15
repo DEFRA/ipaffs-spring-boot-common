@@ -29,12 +29,12 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:git:https://giteux.azure.defra.cloud/imports/spring-boot-common.git</connection>
+    <connection>scm:git:https://github.com/DEFRA/ipaffs-spring-boot-common.git</connection>
     <tag>HEAD</tag>
   </scm>
 
   <properties>
-    <project.scm.id>gitlab</project.scm.id>
+    <project.scm.id>github</project.scm.id>
 
     <!--
     this version is managed/kept-aligned with the modules pom.version by the maven release plugin
