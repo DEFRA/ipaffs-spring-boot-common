@@ -43,7 +43,7 @@
     -->
     <tracesx.springboot.common.version>4.0.18-SNAPSHOT</tracesx.springboot.common.version>
 
-    <java.version>17</java.version>
+    <java.version>21</java.version>
 
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>

@@ -5,5 +5,5 @@ javaLibraryPipeline {
    SONARQUBE_PROJECT_NAME = "Imports-spring-boot-common"
    SERVICE_VERSION = "1.0"
    SELENIUM_BRANCH = "master"
-   JAVA_VERSION = '17'
+   JAVA_VERSION = '21'
 }
