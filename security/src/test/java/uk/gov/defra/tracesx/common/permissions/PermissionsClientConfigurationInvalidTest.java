@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @SpringBootTest(classes = PermissionsClient.class)
 class PermissionsClientConfigurationInvalidTest {
 
-  @MockBean
+  @MockitoBean
   @Qualifier(PERMISSIONS_REST_TEMPLATE_QUALIFIER)
   RestTemplate restTemplate;
   @Autowired

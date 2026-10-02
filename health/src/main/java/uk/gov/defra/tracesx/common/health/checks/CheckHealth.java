@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.health.checks;
 
-import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.health.contributor.Health;
 
 public interface CheckHealth {
 

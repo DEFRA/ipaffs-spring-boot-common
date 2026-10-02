@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.health.contributor.Health;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
 import uk.gov.defra.tracesx.common.health.checks.JdbcHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.http.HttpHealthCheck;
