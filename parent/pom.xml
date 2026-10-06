@@ -36,7 +36,7 @@
 
     ie it will get bumped/have -SNAPSHOT added/removed when the main build runs on the CI server
     -->
-    <tracesx.springboot.common.version>4.0.37-SNAPSHOT</tracesx.springboot.common.version>
+    <tracesx.springboot.common.version>5.0.0-SNAPSHOT</tracesx.springboot.common.version>
 
     <java.version>21</java.version>
 
