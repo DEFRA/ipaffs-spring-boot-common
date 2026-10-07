@@ -7,8 +7,6 @@ import static uk.gov.defra.tracesx.common.security.tests.CommonProperties.TEST_O
 import static uk.gov.defra.tracesx.common.security.tests.CommonProperties.TEST_OPENID_TOKEN_SERVICE_URL;
 import static uk.gov.defra.tracesx.common.security.tests.jwt.JwtConstants.EXP;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -17,6 +15,8 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class SelfSignedTokenClient {
 
@@ -65,7 +65,7 @@ public class SelfSignedTokenClient {
     String body;
     try {
       body = objectMapper.writeValueAsString(overrides);
-    } catch (JsonProcessingException exception) {
+    } catch (JacksonException exception) {
       throw new IllegalArgumentException(exception);
     }
     Response response =

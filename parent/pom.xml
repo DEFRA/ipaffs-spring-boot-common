@@ -53,7 +53,7 @@
     <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
     <jjwt.version>0.11.5</jjwt.version>
     <json.version>20240303</json.version>
-    <json.patch.version>1.9</json.patch.version>
+    <json.patch.version>0.6.3</json.patch.version>
     <maven.checkstyle.version>3.3.0</maven.checkstyle.version>
     <maven-dependency-analyzer.version>1.13.2</maven-dependency-analyzer.version>
     <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
@@ -132,8 +132,8 @@
         <version>${applicationinsights-core.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.github.fge</groupId>
-        <artifactId>json-patch</artifactId>
+        <groupId>io.github.vishwakarma</groupId>
+        <artifactId>zjsonpatch</artifactId>
         <version>${json.patch.version}</version>
       </dependency>
       <dependency>
@@ -252,8 +252,8 @@
       <artifactId>httpasyncclient</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.fge</groupId>
-      <artifactId>json-patch</artifactId>
+      <groupId>io.github.vishwakarma</groupId>
+      <artifactId>zjsonpatch</artifactId>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
