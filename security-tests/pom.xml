@@ -8,12 +8,12 @@
   <parent>
     <groupId>uk.gov.defra.tracesx</groupId>
     <artifactId>tracesx-springboot-common</artifactId>
-    <version>5.0.1-SNAPSHOT</version>
+    <version>5.0.1</version>
   </parent>
 
   <scm>
     <connection>${parent.scm.connection}</connection>
-    <tag>HEAD</tag>
+    <tag>5.0.1-1397259</tag>
   </scm>
 
   <dependencies>
