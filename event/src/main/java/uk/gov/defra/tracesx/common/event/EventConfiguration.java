@@ -1,6 +1,5 @@
 package uk.gov.defra.tracesx.common.event;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.applicationinsights.TelemetryClient;
 import com.microsoft.azure.eventhubs.ConnectionStringBuilder;
 import com.microsoft.azure.eventhubs.EventHubClient;
@@ -15,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.databind.PropertyNamingStrategies;
+import tools.jackson.databind.json.JsonMapper;
 import uk.gov.defra.tracesx.common.event.monitor.AppInsightsBasedMonitor;
 import uk.gov.defra.tracesx.common.event.monitor.EventHubBasedMonitor;
 import uk.gov.defra.tracesx.common.event.monitor.LogBasedMonitor;
@@ -114,7 +115,9 @@ public class EventConfiguration {
 
   @Bean
   public MessageUtil createMessageUtil() {
-    return new MessageUtil(new ObjectMapper(), eventHubEnvironment);
+    return new MessageUtil(JsonMapper.builder()
+            .propertyNamingStrategy(PropertyNamingStrategies.LOWER_CASE)
+            .build(), eventHubEnvironment);
   }
 
   @Bean

@@ -2,10 +2,10 @@ package uk.gov.defra.tracesx.common.event.validation;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tools.jackson.databind.ObjectMapper;
 import uk.gov.defra.tracesx.common.event.exception.MessageValidationException;
 import uk.gov.defra.tracesx.common.event.model.Details;
 import uk.gov.defra.tracesx.common.event.model.Message;

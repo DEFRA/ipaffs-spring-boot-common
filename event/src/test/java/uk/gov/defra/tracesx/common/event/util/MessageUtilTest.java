@@ -4,13 +4,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import uk.gov.defra.tracesx.common.event.exception.ProtectiveMonitorJsonProcessingException;
 import uk.gov.defra.tracesx.common.event.model.Component;
 import uk.gov.defra.tracesx.common.event.model.Details;
@@ -48,7 +48,7 @@ class MessageUtilTest {
   }
 
   @Test
-  void writeMessage_WritesValueAsString() throws JsonProcessingException {
+  void writeMessage_WritesValueAsString() throws JacksonException {
     when(objectMapper.writeValueAsString(message)).thenReturn("string");
     String result = messageUtil.writeMessage(message);
 
@@ -56,8 +56,8 @@ class MessageUtilTest {
   }
 
   @Test
-  void writeMessage_ConvertsToCustomException() throws JsonProcessingException {
-    when(objectMapper.writeValueAsString(message)).thenThrow(new JsonProcessingException("message"){});
+  void writeMessage_ConvertsToCustomException() throws JacksonException {
+    when(objectMapper.writeValueAsString(message)).thenThrow(new JacksonException("message"){});
 
     assertThatThrownBy(() -> messageUtil.writeMessage(message))
         .isInstanceOf(ProtectiveMonitorJsonProcessingException.class)
@@ -65,7 +65,7 @@ class MessageUtilTest {
   }
 
   @Test
-  void writeMessageToBytes_WritesValueAsByteArray() throws JsonProcessingException {
+  void writeMessageToBytes_WritesValueAsByteArray() throws JacksonException {
     byte[] bytes = new ObjectMapper().writeValueAsBytes(message);
     when(objectMapper.writeValueAsBytes(message)).thenReturn(bytes);
     byte[] result = messageUtil.writeMessageToBytes(message);
@@ -74,8 +74,8 @@ class MessageUtilTest {
   }
 
   @Test
-  void writeMessageToBytes_ConvertsToCustomException() throws JsonProcessingException {
-    when(objectMapper.writeValueAsBytes(message)).thenThrow(new JsonProcessingException("message"){});
+  void writeMessageToBytes_ConvertsToCustomException() throws JacksonException {
+    when(objectMapper.writeValueAsBytes(message)).thenThrow(new JacksonException("message"){});
 
     assertThatThrownBy(() -> messageUtil.writeMessageToBytes(message))
         .isInstanceOf(ProtectiveMonitorJsonProcessingException.class)

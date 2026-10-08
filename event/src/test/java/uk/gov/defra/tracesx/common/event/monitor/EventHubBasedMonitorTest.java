@@ -6,8 +6,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.eventhubs.EventData;
 import com.microsoft.azure.eventhubs.EventHubClient;
 import com.microsoft.azure.eventhubs.EventHubException;
@@ -19,6 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import uk.gov.defra.tracesx.common.event.model.Message;
 import uk.gov.defra.tracesx.common.event.model.Priority;
 import uk.gov.defra.tracesx.common.event.util.MessageUtil;
@@ -48,7 +48,7 @@ class EventHubBasedMonitorTest {
   private Message message = Message.getDefaultMessageBuilder().build();
 
   @BeforeEach
-  public void before() throws JsonProcessingException {
+  public void before() throws JacksonException {
     byte[] payloadBytes = new ObjectMapper().writeValueAsBytes(message);
     when(messageUtil.writeMessageToBytes(any())).thenReturn(payloadBytes);
     when(circuitBreakerRegistry.circuitBreaker(any())).thenReturn(circuitBreaker);
