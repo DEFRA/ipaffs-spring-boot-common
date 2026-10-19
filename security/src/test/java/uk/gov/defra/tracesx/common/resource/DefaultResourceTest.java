@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.resource;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.permissions;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static uk.gov.defra.tracesx.common.CommonWebMvcConfiguration.PERMISSIONS_REST_TEMPLATE_QUALIFIER;
 
 import org.junit.jupiter.api.Test;

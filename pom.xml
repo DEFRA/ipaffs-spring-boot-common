@@ -37,6 +37,7 @@
     <io.github.resilience4j.version>1.7.1</io.github.resilience4j.version>
     <jacoco.maven.plugin.version>0.8.15</jacoco.maven.plugin.version>
     <javax.el.version>3.0.0</javax.el.version>
+    <jwks-rsa.version>0.24.1</jwks-rsa.version>
     <lucene.version>10.5.1</lucene.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok.version>1.18.48</lombok.version>
@@ -94,6 +95,11 @@
         <groupId>com.nimbusds</groupId>
         <artifactId>nimbus-jose-jwt</artifactId>
         <version>${nimbus-jose-jwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.auth0</groupId>
+        <artifactId>jwks-rsa</artifactId>
+        <version>${jwks-rsa.version}</version>
       </dependency>
       <dependency>
         <groupId>com.microsoft.azure</groupId>
@@ -175,11 +181,6 @@
   <dependencies>
     <!-- TEST Dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -189,11 +190,6 @@
           <artifactId>android-json</artifactId>
         </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 
