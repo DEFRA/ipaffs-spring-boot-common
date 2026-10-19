@@ -45,7 +45,7 @@
     <azure.version>2.3.3</azure.version>
     <azureidentity.version>1.16.1</azureidentity.version>
     <checkstyle.version>10.12.2</checkstyle.version>
-    <commons.beanutils.version>1.9.4</commons.beanutils.version>
+    <commons.beanutils.version>1.11.0</commons.beanutils.version>
     <equalsverifier.version>3.15.1</equalsverifier.version>
     <everit-json-schema.version>1.14.4</everit-json-schema.version>
     <git-build-hook-maven-plugin.version>3.4.1</git-build-hook-maven-plugin.version>
@@ -63,7 +63,6 @@
     <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     <maven-remote-resources-plugin.version>3.1.0</maven-remote-resources-plugin.version>
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
-    <mssql.jdbc.version>12.10.0.jre11</mssql.jdbc.version>
     <neovisionaries.version>1.29</neovisionaries.version>
     <org.owasp.encoder.version>1.2.3</org.owasp.encoder.version>
     <shared-resources.version>1.0.3</shared-resources.version>
@@ -140,11 +139,6 @@
         <groupId>com.github.erosb</groupId>
         <artifactId>everit-json-schema</artifactId>
         <version>${everit-json-schema.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.microsoft.sqlserver</groupId>
-        <artifactId>mssql-jdbc</artifactId>
-        <version>${mssql.jdbc.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
