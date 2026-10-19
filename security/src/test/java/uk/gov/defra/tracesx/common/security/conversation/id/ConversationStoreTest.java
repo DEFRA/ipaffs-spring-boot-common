@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.security.conversation.id;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 

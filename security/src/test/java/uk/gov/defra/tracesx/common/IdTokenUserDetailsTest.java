@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import uk.gov.defra.tracesx.common.security.IdTokenUserDetails;

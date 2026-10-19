@@ -1,6 +1,6 @@
 package uk.gov.defra.tracesx.common.security.tests.jwt;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class EmptyTest {
 
