@@ -40,10 +40,19 @@
 
     <java.version>21</java.version>
 
+    <!-- CVE fixes over Spring Boot's 2.21.5 for the libraries still on Jackson 2 (azure-core, jjwt
+      and the mapping library); remove once Spring Boot manages 2.21.7 or later -->
+    <jackson-2-bom.version>2.21.7</jackson-2-bom.version>
+    <!-- 5.x has the Jackson 3 annotations that keep the notification's date formats; 4.x ones are
+      ignored by Jackson 3, so this also overrides the 4.x the mapping library brings -->
+    <tracesx.notification.schema.version>5.0.0</tracesx.notification.schema.version>
+
     <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
     <azure.version>2.3.3</azure.version>
-    <azureidentity.version>1.16.1</azureidentity.version>
+    <!-- Same azure-core version as azure-identity -->
+    <azure-core-http-jdk-httpclient.version>1.1.3</azure-core-http-jdk-httpclient.version>
+    <azureidentity.version>1.18.2</azureidentity.version>
     <checkstyle.version>10.12.2</checkstyle.version>
     <commons.beanutils.version>1.11.0</commons.beanutils.version>
     <equalsverifier.version>3.15.1</equalsverifier.version>
@@ -63,6 +72,8 @@
     <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
     <maven-remote-resources-plugin.version>3.1.0</maven-remote-resources-plugin.version>
     <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
+    <!-- 9.0.0 records request bodies pretty-printed and in the wrong charset -->
+    <mockserver.client.version>5.15.0</mockserver.client.version>
     <neovisionaries.version>1.29</neovisionaries.version>
     <org.owasp.encoder.version>1.2.3</org.owasp.encoder.version>
     <shared-resources.version>1.0.3</shared-resources.version>
@@ -195,6 +206,28 @@
         <artifactId>snakeyaml</artifactId>
         <version>${snakeyaml.version}</version>
       </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>notification-schema-java</artifactId>
+        <version>${tracesx.notification.schema.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>uk.gov.defra.tracesx</groupId>
+        <artifactId>notification-schema-core</artifactId>
+        <version>${tracesx.notification.schema.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-client-java</artifactId>
+        <version>${mockserver.client.version}</version>
+        <exclusions>
+          <!-- Spring Boot's Netty BOM gives these natives runtime scope, so they'd be packaged -->
+          <exclusion>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-boringssl-static</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -232,6 +265,20 @@
       <groupId>com.azure</groupId>
       <artifactId>azure-identity</artifactId>
       <version>${azureidentity.version}</version>
+      <exclusions>
+        <!-- Built for Netty 4.1 (Spring Boot 4 manages Netty 4.2), and brings the tcnative and
+          HTTP/3 natives for five platforms -->
+        <exclusion>
+          <groupId>com.azure</groupId>
+          <artifactId>azure-core-http-netty</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- azure-identity's HTTP client, used for the SQL Server token -->
+    <dependency>
+      <groupId>com.azure</groupId>
+      <artifactId>azure-core-http-jdk-httpclient</artifactId>
+      <version>${azure-core-http-jdk-httpclient.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -253,6 +300,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <!-- TODO: IMTS-4606 It would be nice to have a separate persistence parent -->
     <dependency>
@@ -382,6 +430,16 @@
         <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <!-- Lombok is compile-time only, but trade-dtos and the notification schema bring it at
+              compile scope -->
+            <excludes>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+          </configuration>
           <executions>
             <execution>
               <goals>
