@@ -226,6 +226,21 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-tcnative-boringssl-static</artifactId>
           </exclusion>
+          <!-- These old javax builds clash with springdoc's swagger, and the application won't
+               start. Not swagger-parser: MockServerClient needs the com.github.fge classes it
+               brings. -->
+          <exclusion>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+          </exclusion>
         </exclusions>
       </dependency>
     </dependencies>
