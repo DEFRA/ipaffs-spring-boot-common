@@ -11,7 +11,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>4.1.1</version>
+    <version>4.1.2</version>
   </parent>
 
 
@@ -40,9 +40,6 @@
 
     <java.version>21</java.version>
 
-    <!-- CVE fixes over Spring Boot's 2.21.5 for the libraries still on Jackson 2 (azure-core, jjwt
-      and the mapping library); remove once Spring Boot manages 2.21.7 or later -->
-    <jackson-2-bom.version>2.21.7</jackson-2-bom.version>
     <!-- 5.x has the Jackson 3 annotations that keep the notification's date formats; 4.x ones are
       ignored by Jackson 3, so this also overrides the 4.x the mapping library brings -->
     <tracesx.notification.schema.version>5.0.0</tracesx.notification.schema.version>

@@ -10,7 +10,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-dependencies</artifactId>
-    <version>4.1.1</version>
+    <version>4.1.2</version>
   </parent>
 
   <properties>
@@ -40,7 +40,6 @@
     <jwks-rsa.version>0.24.1</jwks-rsa.version>
     <lucene.version>10.5.1</lucene.version>
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
-    <lombok.version>1.18.48</lombok.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
     <rest-assured.version>5.3.2</rest-assured.version>
