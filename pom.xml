@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.gov.defra.tracesx</groupId>
   <artifactId>tracesx-springboot-common</artifactId>
-  <version>5.0.8-SNAPSHOT</version>
+  <version>5.0.8</version>
   <packaging>pom</packaging>
   <description>Shared Spring Boot: Common Libraries Parent and Aggregator Module</description>
   <name>common-parent</name>
@@ -50,7 +50,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/DEFRA/ipaffs-spring-boot-common</connection>
-    <tag>HEAD</tag>
+    <tag>5.0.8-1424716</tag>
   </scm>
 
   <modules>
