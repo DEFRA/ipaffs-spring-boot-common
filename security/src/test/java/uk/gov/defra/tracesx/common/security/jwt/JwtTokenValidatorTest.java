@@ -142,11 +142,12 @@ class JwtTokenValidatorTest {
 
   @Test
   void validateToken_expiryInvalidFormat_throwsException() {
+    // jjwt rejects a non-date 'exp' claim at build time, so set it through a raw payload
+    String payload = String.format("{\"exp\":\"%s\",\"aud\":\"%s\",\"iss\":\"%s\"}",
+        new Date(), AUD, ISS);
     String token =
         Jwts.builder().setHeader(Collections.singletonMap("kid", KID))
-            .claim("exp", new Date().toString())
-            .claim("aud", AUD)
-            .claim("iss", ISS)
+            .setPayload(payload)
             .signWith(KEY_PAIR.getPrivate()).compact();
     when(jwksCache.getPublicKeys(KID)).thenReturn(keyAndClaims);
     assertThatExceptionOfType(JwtAuthenticationException.class)
