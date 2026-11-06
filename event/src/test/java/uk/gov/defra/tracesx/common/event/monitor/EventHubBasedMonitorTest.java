@@ -1,11 +1,16 @@
 package uk.gov.defra.tracesx.common.event.monitor;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import com.microsoft.azure.eventhubs.EventData;
 import com.microsoft.azure.eventhubs.EventHubClient;
 import com.microsoft.azure.eventhubs.EventHubException;
@@ -17,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.slf4j.LoggerFactory;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 import uk.gov.defra.tracesx.common.event.model.Message;
@@ -120,5 +126,29 @@ class EventHubBasedMonitorTest {
 
     verify(messageUtil).setEventHubEnvironment(message);
     assertThat(circuitBreaker.getState().name()).isEqualTo(CLOSED);
+  }
+
+  @Test
+  void sendMessage_LogsCircuitBreakerStateOnlyWhenItChanges() {
+    Logger logger = (Logger) LoggerFactory.getLogger(EventHubBasedMonitor.class);
+    ListAppender<ILoggingEvent> appender = new ListAppender<>();
+    appender.start();
+    logger.addAppender(appender);
+    try {
+      eventHubBasedMonitor.sendMessage(message);
+      eventHubBasedMonitor.sendMessage(message);
+      circuitBreaker.transitionToOpenState();
+      eventHubBasedMonitor.sendMessage(message);
+      eventHubBasedMonitor.sendMessage(message);
+
+      assertThat(appender.list)
+          .extracting(ILoggingEvent::getLevel, ILoggingEvent::getFormattedMessage)
+          .containsExactly(
+              tuple(Level.INFO, "CircuitBreaker state is CLOSED"),
+              tuple(Level.WARN,
+                  "CircuitBreaker state is OPEN (was CLOSED); events fall back to App Insights"));
+    } finally {
+      logger.detachAppender(appender);
+    }
   }
 }

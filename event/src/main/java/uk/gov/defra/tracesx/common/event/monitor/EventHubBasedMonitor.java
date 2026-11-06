@@ -6,6 +6,7 @@ import com.microsoft.azure.eventhubs.EventHubException;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
 import io.vavr.control.Try;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
   private final CircuitBreakerRegistry circuitBreakerRegistry;
   private final EventHubClient eventHubClient;
   private final MessageUtil messageUtil;
+  private final AtomicReference<CircuitBreaker.State> lastLoggedState = new AtomicReference<>();
 
   public EventHubBasedMonitor(
       AppInsightsBasedMonitor appInsightsBasedMonitor,
@@ -48,8 +50,21 @@ public class EventHubBasedMonitor implements ProtectiveMonitor {
 
     Try.ofSupplier(decoratedSupplier).recover(throwable -> logToAppInsights(message)).get();
 
-    String state = circuitBreaker.getState().name();
-    LOGGER.info("CircuitBreaker state is {}", state);
+    logStateChange(circuitBreaker.getState());
+  }
+
+  // Logging the state on every send produced one line per event; only log when it changes
+  private void logStateChange(CircuitBreaker.State state) {
+    CircuitBreaker.State previous = lastLoggedState.getAndSet(state);
+    if (state == previous) {
+      return;
+    }
+    if (state == CircuitBreaker.State.CLOSED) {
+      LOGGER.info("CircuitBreaker state is {}", state);
+    } else {
+      LOGGER.warn("CircuitBreaker state is {} (was {}); events fall back to App Insights",
+          state, previous);
+    }
   }
 
   private String sendSync(EventData eventData, Message message) {
