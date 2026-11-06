@@ -44,39 +44,39 @@
       ignored by Jackson 3, so this also overrides the 4.x the mapping library brings -->
     <tracesx.notification.schema.version>5.0.0</tracesx.notification.schema.version>
 
-    <applicationinsights-core.version>3.4.19</applicationinsights-core.version>
+    <applicationinsights-core.version>3.7.10</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
-    <azure.version>2.3.3</azure.version>
+    <azure.version>2.3.5</azure.version>
     <!-- Same azure-core version as azure-identity -->
-    <azure-core-http-jdk-httpclient.version>1.1.3</azure-core-http-jdk-httpclient.version>
-    <azureidentity.version>1.18.2</azureidentity.version>
+    <azure-core-http-jdk-httpclient.version>1.3.0</azure-core-http-jdk-httpclient.version>
+    <azureidentity.version>1.19.0</azureidentity.version>
     <checkstyle.version>10.12.2</checkstyle.version>
     <commons.beanutils.version>1.11.0</commons.beanutils.version>
     <equalsverifier.version>4.5.2</equalsverifier.version>
-    <everit-json-schema.version>1.14.4</everit-json-schema.version>
-    <git-build-hook-maven-plugin.version>3.4.1</git-build-hook-maven-plugin.version>
+    <everit-json-schema.version>1.14.6</everit-json-schema.version>
+    <git-build-hook-maven-plugin.version>3.6.0</git-build-hook-maven-plugin.version>
     <guava.version>33.7.2-jre</guava.version>
-    <jacoco.maven.plugin.version>0.8.10</jacoco.maven.plugin.version>
+    <jacoco.maven.plugin.version>0.8.16</jacoco.maven.plugin.version>
     <jjwt.version>0.11.5</jjwt.version>
     <json.version>20240303</json.version>
-    <json.patch.version>0.6.3</json.patch.version>
-    <maven.checkstyle.version>3.3.0</maven.checkstyle.version>
-    <maven-dependency-analyzer.version>1.13.2</maven-dependency-analyzer.version>
-    <maven-dependency-plugin.version>3.6.0</maven-dependency-plugin.version>
-    <maven.deploy.plugin.version>3.1.1</maven.deploy.plugin.version>
-    <maven.help.plugin.version>3.4.0</maven.help.plugin.version>
-    <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
-    <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-    <maven-remote-resources-plugin.version>3.1.0</maven-remote-resources-plugin.version>
-    <maven.versions.plugin.version>2.16.0</maven.versions.plugin.version>
+    <json.patch.version>0.6.4</json.patch.version>
+    <maven.checkstyle.version>3.6.0</maven.checkstyle.version>
+    <maven-dependency-analyzer.version>1.17.2</maven-dependency-analyzer.version>
+    <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
+    <maven.deploy.plugin.version>3.2.0</maven.deploy.plugin.version>
+    <maven.help.plugin.version>3.5.2</maven.help.plugin.version>
+    <maven.jar.plugin.version>3.5.1</maven.jar.plugin.version>
+    <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+    <maven-remote-resources-plugin.version>3.3.0</maven-remote-resources-plugin.version>
+    <maven.versions.plugin.version>2.23.0</maven.versions.plugin.version>
     <!-- 9.0.0 records request bodies pretty-printed and in the wrong charset -->
     <mockserver.client.version>5.15.0</mockserver.client.version>
     <neovisionaries.version>1.29</neovisionaries.version>
-    <org.owasp.encoder.version>1.2.3</org.owasp.encoder.version>
+    <org.owasp.encoder.version>1.6.0</org.owasp.encoder.version>
     <shared-resources.version>1.0.3</shared-resources.version>
-    <snakeyaml.version>2.1</snakeyaml.version>
+    <snakeyaml.version>2.7</snakeyaml.version>
     <woodstox-core.version>6.5.1</woodstox-core.version>
-    <springdoc-openapi-starter-webmvc-ui.version>3.1.1</springdoc-openapi-starter-webmvc-ui.version>
+    <springdoc-openapi-starter-webmvc-ui.version>3.2.0</springdoc-openapi-starter-webmvc-ui.version>
   </properties>
 
   <dependencyManagement>
