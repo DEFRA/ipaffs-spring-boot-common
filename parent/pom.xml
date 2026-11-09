@@ -42,7 +42,7 @@
 
     <!-- 5.x has the Jackson 3 annotations that keep the notification's date formats; 4.x ones are
       ignored by Jackson 3, so this also overrides the 4.x the mapping library brings -->
-    <tracesx.notification.schema.version>5.0.0</tracesx.notification.schema.version>
+    <tracesx.notification.schema.version>5.0.1</tracesx.notification.schema.version>
 
     <applicationinsights-core.version>3.7.10</applicationinsights-core.version>
     <azure.springboot.metricsstarter.version>2.3.5</azure.springboot.metricsstarter.version>
