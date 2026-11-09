@@ -8,6 +8,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.crypto.RSASSASigner;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -141,13 +147,17 @@ class JwtTokenValidatorTest {
   }
 
   @Test
-  void validateToken_expiryInvalidFormat_throwsException() {
-    String token =
-        Jwts.builder().setHeader(Collections.singletonMap("kid", KID))
+  void validateToken_expiryInvalidFormat_throwsException() throws JOSEException {
+    // jjwt 0.12+ rejects a non-numeric exp when building, so sign this token with nimbus instead
+    SignedJWT jwt = new SignedJWT(
+        new JWSHeader.Builder(JWSAlgorithm.RS256).keyID(KID).build(),
+        new JWTClaimsSet.Builder()
             .claim("exp", new Date().toString())
             .claim("aud", AUD)
             .claim("iss", ISS)
-            .signWith(KEY_PAIR.getPrivate()).compact();
+            .build());
+    jwt.sign(new RSASSASigner(KEY_PAIR.getPrivate()));
+    String token = jwt.serialize();
     when(jwksCache.getPublicKeys(KID)).thenReturn(keyAndClaims);
     assertThatExceptionOfType(JwtAuthenticationException.class)
         .isThrownBy(() -> jwtTokenValidator.validateToken(token));
