@@ -50,7 +50,7 @@
     <!-- Same azure-core version as azure-identity -->
     <azure-core-http-jdk-httpclient.version>1.3.0</azure-core-http-jdk-httpclient.version>
     <azureidentity.version>1.19.0</azureidentity.version>
-    <checkstyle.version>10.12.2</checkstyle.version>
+    <checkstyle.version>14.4.0</checkstyle.version>
     <commons.beanutils.version>1.11.0</commons.beanutils.version>
     <equalsverifier.version>4.5.2</equalsverifier.version>
     <everit-json-schema.version>1.14.6</everit-json-schema.version>
