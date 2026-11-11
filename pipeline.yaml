@@ -17,10 +17,12 @@ resources:
       type: github
       endpoint: DEFRA
       name: DEFRA/ipaffs-infra
-      ref: refs/heads/main
+      # TEMPORARY: test the feed templates before ipaffs-infra merges them; revert to refs/heads/main
+      ref: refs/heads/imta-21519-ado-feed-publish
 
 stages:
   - template: /pipelines/templates/java-library-template.yaml@ipaffs-infra
     parameters:
       sonarAnalysis: true
       sonarReferenceBranch: master
+      mavenRegistry: feed
