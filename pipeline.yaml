@@ -17,8 +17,7 @@ resources:
       type: github
       endpoint: DEFRA
       name: DEFRA/ipaffs-infra
-      # TEMPORARY: test the feed templates before ipaffs-infra merges them; revert to refs/heads/main
-      ref: refs/heads/imta-21519-ado-feed-publish
+      ref: refs/heads/main
 
 stages:
   - template: /pipelines/templates/java-library-template.yaml@ipaffs-infra
