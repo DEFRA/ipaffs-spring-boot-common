@@ -24,3 +24,4 @@ stages:
     parameters:
       sonarAnalysis: true
       sonarReferenceBranch: master
+      mavenRegistry: feed
