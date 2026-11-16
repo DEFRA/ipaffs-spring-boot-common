@@ -77,7 +77,7 @@
     <org.owasp.encoder.version>1.6.0</org.owasp.encoder.version>
     <shared-resources.version>1.0.3</shared-resources.version>
     <snakeyaml.version>2.7</snakeyaml.version>
-    <woodstox-core.version>6.5.1</woodstox-core.version>
+    <woodstox-core.version>7.3.0</woodstox-core.version>
     <springdoc-openapi-starter-webmvc-ui.version>3.2.0</springdoc-openapi-starter-webmvc-ui.version>
   </properties>
 
