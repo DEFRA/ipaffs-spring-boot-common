@@ -42,7 +42,7 @@
     <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
     <lombok-maven-plugin.outputDirectory>${project.build.directory}/generated-sources/delombok</lombok-maven-plugin.outputDirectory>
     <org.glassfish.jakarta.el.version>5.0.0-M1</org.glassfish.jakarta.el.version>
-    <rest-assured.version>5.3.2</rest-assured.version>
+    <rest-assured.version>6.3.0</rest-assured.version>
     <git-build-hook-maven-plugin.version>3.6.0</git-build-hook-maven-plugin.version>
     <maven-remote-resources-plugin.version>3.3.0</maven-remote-resources-plugin.version>
     <shared-resources.version>1.0.3</shared-resources.version>
