@@ -46,8 +46,8 @@ public class HealthCheckConfiguration {
       @Value("${management.health.custom.http.connectTimeout:1000}") Integer connectTimeout,
       @Value("${management.health.custom.http.readTimeout:1000}") Integer readTimeout) {
     return new RestTemplateBuilder()
-        .connectTimeout(Duration.ofSeconds(connectTimeout))
-        .readTimeout(Duration.ofSeconds(readTimeout))
+        .connectTimeout(Duration.ofMillis(connectTimeout))
+        .readTimeout(Duration.ofMillis(readTimeout))
         .build();
   }
 

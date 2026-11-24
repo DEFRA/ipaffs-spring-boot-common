@@ -1,10 +1,15 @@
 package uk.gov.defra.tracesx.common.health;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTimeoutPreemptively;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.defra.tracesx.common.health.checks.AzureHealthCheck;
 import uk.gov.defra.tracesx.common.health.checks.CheckHealth;
@@ -72,6 +78,25 @@ class HealthCheckConfigurationSpringTest {
           assertThat(context.getBean("defaultHealthCheckRestTemplate"))
               .isInstanceOf(RestTemplate.class);
         });
+  }
+
+  @Test
+  void testDefaultHealthCheckRestTemplateTimeoutsAreMilliseconds() throws IOException {
+    // A server that accepts connections but never responds, so only the read timeout ends the
+    // request. With the 1000 ms default it must fail in about a second, not after 1000 seconds.
+    try (ServerSocket silentServer = new ServerSocket(0)) {
+      String url = "http://localhost:" + silentServer.getLocalPort() + "/";
+      this.contextRunner.run(
+          (context) -> {
+            RestTemplate restTemplate =
+                context.getBean("defaultHealthCheckRestTemplate", RestTemplate.class);
+            assertTimeoutPreemptively(
+                Duration.ofSeconds(10),
+                () ->
+                    assertThatThrownBy(() -> restTemplate.getForObject(url, String.class))
+                        .isInstanceOf(ResourceAccessException.class));
+          });
+    }
   }
 
   @Test
