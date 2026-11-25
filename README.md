@@ -16,6 +16,46 @@ It is used as a pre-push hook and will scan any local commits being pushed
 
 To integrate this library you will be required to ensure the correct configuration is applied in the relevant application.yml file.
 
+## Common Azure SQL library
+
+For services that use JPA on Azure SQL. It brings `spring-boot-starter-data-jpa`, the SQL Server
+driver and `azure-identity` (for `authentication=ActiveDirectoryDefault` in the JDBC URL), and sets
+connection pool defaults suited to Azure SQL.
+
+```
+<dependency>
+    <groupId>uk.gov.defra.tracesx</groupId>
+    <artifactId>tracesx-springboot-common-azure-sql</artifactId>
+    <version>desired version</version>
+</dependency>
+```
+
+Let Spring Boot create the DataSource from `spring.datasource.url`. The defaults only apply to a
+DataSource bound from `spring.datasource.hikari`, so don't build one with `DataSourceBuilder`. At
+startup the module logs a warning for any `HikariDataSource` bean whose pool settings differ from
+those properties, naming each setting that differs. A service that deliberately configures its own
+pools (e.g. several DataSources) can turn that off with
+`tracesx.azure-sql.datasource-check.enabled=false`.
+
+| Property | Default | HikariCP's own default |
+|---|---|---|
+| `spring.datasource.hikari.maximum-pool-size` | 10 | 10 |
+| `spring.datasource.hikari.keepalive-time` | 60000 (1 min) | 120000 |
+| `spring.datasource.hikari.max-lifetime` | 600000 (10 min) | 1800000 |
+| `spring.datasource.hikari.connection-timeout` | 10000 (10 s) | 30000 |
+| `spring.datasource.hikari.validation-timeout` | 2000 (2 s) | 5000 |
+| `spring.datasource.hikari.data-source-properties[socketTimeout]` | 90000 (90 s) | driver: none |
+| `spring.datasource.hikari.data-source-properties[loginTimeout]` | 15 (s) | driver: 30 |
+| `spring.datasource.hikari.data-source-properties[cancelQueryTimeout]` | 10 (s) | driver: none |
+| `logging.level.com.zaxxer.hikari` | WARN | |
+
+Anything in the service's `application.yml` or environment overrides them, e.g.
+`SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=20`.
+
+The `data-source-properties` are SQL Server driver settings. The driver lets them override the same
+settings in the JDBC URL, so the connection string only needs to say where the database is and how
+to authenticate. `socketTimeout` must stay above the service's longest query timeout.
+
 ## Common Event library
 This module should be included as a dependency for TracesX Spring Boot microservice projects, whereby protective monitoring events are called.
 
