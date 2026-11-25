@@ -72,7 +72,7 @@
     <maven-remote-resources-plugin.version>3.3.0</maven-remote-resources-plugin.version>
     <maven.versions.plugin.version>2.23.0</maven.versions.plugin.version>
     <!-- 9.0.0 records request bodies pretty-printed and in the wrong charset -->
-    <mockserver.client.version>5.15.0</mockserver.client.version>
+    <mockserver.client.version>9.3.0</mockserver.client.version>
     <neovisionaries.version>1.29</neovisionaries.version>
     <org.owasp.encoder.version>1.6.0</org.owasp.encoder.version>
     <shared-resources.version>1.0.3</shared-resources.version>
